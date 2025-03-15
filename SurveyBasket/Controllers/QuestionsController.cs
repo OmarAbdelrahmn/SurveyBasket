@@ -1,14 +1,16 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SurveyBasket.Abstraction;
+using SurveyBasket.Abstraction.Consts;
 using SurveyBasket.Abstraction.Errors;
+using SurveyBasket.Authentication.Filters;
 using SurveyBasket.Contracts.Questions;
 using SurveyBasket.Services.Questions;
 
 namespace SurveyBasket.Controllers;
 [Route("polls/{PollId}/[controller]")]
 [ApiController]
-[Authorize]
+
 public class QuestionsController(IQuestionService service) : ControllerBase
 {
     private readonly IQuestionService service = service;
@@ -17,6 +19,7 @@ public class QuestionsController(IQuestionService service) : ControllerBase
 
 
     [HttpPost]
+    [HasPermission(Permissions.AddQuestions)]
     public async Task<IActionResult> AddAsync(int PollId, QuestionRequest request)
     {
         var result = await service.AddAsync(PollId, request);
@@ -33,6 +36,7 @@ public class QuestionsController(IQuestionService service) : ControllerBase
 
 
     [HttpGet("{Id}")]
+    [HasPermission(Permissions.GetQuestions)]
     public async Task<IActionResult> Get(int PollId,int Id)
     {
         var result = await service.GetAsync(PollId, Id);
@@ -46,6 +50,7 @@ public class QuestionsController(IQuestionService service) : ControllerBase
 
 
     [HttpGet("")]
+    [HasPermission(Permissions.GetQuestions)]
     public async Task<IActionResult> GetAll(int PollId)
     {
 
@@ -59,6 +64,7 @@ public class QuestionsController(IQuestionService service) : ControllerBase
     }
     
     [HttpPut("{Id}")]
+    [HasPermission(Permissions.UpdateQuestions)]
     public async Task<IActionResult> UpdateQuestion(int PollId, int Id ,QuestionRequest request)
     {
 
