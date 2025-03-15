@@ -1,15 +1,18 @@
 ﻿
+using SurveyBasket.Abstraction.Consts;
+using SurveyBasket.Authentication.Filters;
+
 namespace SurveyBasket.Controllers;
 
 
 [Route("[controller]")]
 [ApiController]
-[Authorize]
 public class PollsController(IPollsService service) : ControllerBase
 {
     private readonly IPollsService service = service;
 
     [HttpGet("")]
+    [HasPermission(Permissions.GetPolls)]
     
     public async Task<IActionResult> GetAll()
     {
@@ -22,7 +25,7 @@ public class PollsController(IPollsService service) : ControllerBase
 
 
     [HttpGet("current")]
-
+    [Authorize(Roles = DefaultRoles.Member)]
     public async Task<IActionResult> GetCurrent()
     {
         var response = await service.GetCurrentAsync();
@@ -34,6 +37,8 @@ public class PollsController(IPollsService service) : ControllerBase
 
 
     [HttpGet("{Id}")]
+    [HasPermission(Permissions.GetPolls)]
+
     public async Task<IActionResult> Get(int Id)
     {
         var response = await service.GetPollByIdAsync(Id);
@@ -48,6 +53,8 @@ public class PollsController(IPollsService service) : ControllerBase
 
 
     [HttpPost("")]
+    [HasPermission(Permissions.AddPolls)]
+
     public async Task<IActionResult> add(PollRequest request)
     {   
         var response = await service.CreatePollAsync(request);
@@ -61,6 +68,8 @@ public class PollsController(IPollsService service) : ControllerBase
     
 
     [HttpPut("{Id}")]
+    [HasPermission(Permissions.UpdatePolls)]
+
     public async Task<IActionResult> update(int Id , PollRequest request)
     {
 
@@ -74,6 +83,8 @@ public class PollsController(IPollsService service) : ControllerBase
 
 
     [HttpDelete("{Id}")]
+    [HasPermission(Permissions.DeletePolls)]
+
     public IActionResult delete(int Id,CancellationToken cancellationToken)
     {
         var response = service.DeletePollAsync(Id,cancellationToken);
@@ -84,6 +95,7 @@ public class PollsController(IPollsService service) : ControllerBase
 
 
     [HttpPut("toggle/{Id}")]
+    [HasPermission(Permissions.UpdatePolls)]
     public async Task<IActionResult> Toggle(int Id)
     {
         var response = await service.ToggleStatus(Id);

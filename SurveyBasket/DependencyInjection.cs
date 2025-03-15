@@ -1,7 +1,5 @@
 ﻿
-using Hangfire;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.Extensions.Configuration;
+using SurveyBasket.Authentication.Filters;
 using SurveyBasket.Services.AddResults;
 using SurveyBasket.Services.Notification;
 using SurveyBasket.Services.User;
@@ -84,6 +82,8 @@ public static class DependencyInjection
     }
     public static IServiceCollection AddAuth(this IServiceCollection Services, IConfiguration configuration)
     {
+        Services.AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>();
+        Services.AddTransient<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
 
         Services.AddIdentity<ApplicataionUser, ApplicationRole>()
             .AddEntityFrameworkStores<ApplicationDbcontext>()
