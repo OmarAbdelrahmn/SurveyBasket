@@ -1,16 +1,20 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SurveyBasket.Abstraction.Consts;
+using SurveyBasket.Authentication.Filters;
 using SurveyBasket.Services.AddResults;
 
 namespace SurveyBasket.Controllers;
 [Route("polls/{PollId}/[controller]")]
 [ApiController]
-[Authorize]
+[HasPermission(Permissions.Results)]
 public class ResultsController(IResultService service) : ControllerBase
 {
     private readonly IResultService service = service;
 
     [HttpGet("row-data")]
+    
+
     public async Task<IActionResult> GetPollVotes(int PollId)
     {
         var result = await service.GetPollVotesAsynce(PollId);
