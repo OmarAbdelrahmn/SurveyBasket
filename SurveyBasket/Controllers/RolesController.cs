@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SurveyBasket.Contracts.Roles;
 using SurveyBasket.Services.Roles;
 
 namespace SurveyBasket.Controllers;
@@ -24,6 +25,17 @@ public class RolesController(IRoleService roleService) : ControllerBase
     public async Task<IActionResult> GetRolePermission(string RoleId)
     {
         var response = await roleService.GetRoleByIdAsync(RoleId);
+
+        return response is not null ?
+            Ok(response.Value) :
+            response!.ToProblem();
+
+    }
+    
+    [HttpPost("")]
+    public async Task<IActionResult> addrole(RoleRequest request)
+    {
+        var response = await roleService.addroleAsync(request);
 
         return response is not null ?
             Ok(response.Value) :
