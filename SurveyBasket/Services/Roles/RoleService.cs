@@ -7,6 +7,20 @@ public class RoleService(RoleManager<ApplicationRole> roleManager) : IRoleServic
 {
     private readonly RoleManager<ApplicationRole> roleManager = roleManager;
 
+    public async Task<Result<RoleDetailsResponse>> GetRoleByIdAsync(string RollId)
+    {
+        var role = await roleManager.FindByIdAsync(RollId);
+
+        if (role == null)
+            return Result.Failure<RoleDetailsResponse>(RolesErrors.NotFound);
+
+        var permissions = await roleManager.GetClaimsAsync(role);
+
+        var response = new RoleDetailsResponse(role.Id,role.Name!,role.IsDeleted,permissions.Select(x=>x.Value));
+
+        return Result.Success(response);
+    }
+
     public async Task<Result<IEnumerable<RolesResponse>>> GetRolesAsync(bool? IncludeDisable = false)
     {
         var roles = await roleManager.Roles
