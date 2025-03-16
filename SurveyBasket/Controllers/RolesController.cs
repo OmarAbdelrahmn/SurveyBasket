@@ -19,5 +19,16 @@ public class RolesController(IRoleService roleService) : ControllerBase
             response!.ToProblem();
 
     }
+    
+    [HttpGet("role-permissions/{RoleId}")]
+    public async Task<IActionResult> GetRolePermission(string RoleId)
+    {
+        var response = await roleService.GetRoleByIdAsync(RoleId);
+
+        return response is not null ?
+            Ok(response.Value) :
+            response!.ToProblem();
+
+    }
 
 }
