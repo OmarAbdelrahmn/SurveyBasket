@@ -15,9 +15,9 @@ public class RolesController(IRoleService roleService) : ControllerBase
     {
         var response = await roleService.GetRolesAsync(IncludeDisable);
 
-        return response is not null ?
+        return response.IsSuccess ?
             Ok(response.Value) :
-            response!.ToProblem();
+            response.ToProblem();
 
     }
     
@@ -26,9 +26,9 @@ public class RolesController(IRoleService roleService) : ControllerBase
     {
         var response = await roleService.GetRoleByIdAsync(RoleId);
 
-        return response is not null ?
+        return response.IsSuccess ?
             Ok(response.Value) :
-            response!.ToProblem();
+            response.ToProblem();
 
     }
     
@@ -37,9 +37,9 @@ public class RolesController(IRoleService roleService) : ControllerBase
     {
         var response = await roleService.addroleAsync(request);
 
-        return response is not null ?
+        return response.IsSuccess ?
             Ok(response.Value) :
-            response!.ToProblem();
+            response.ToProblem();
 
     }
 
