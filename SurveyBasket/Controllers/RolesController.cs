@@ -51,6 +51,17 @@ public class RolesController(IRoleService roleService) : ControllerBase
         return response.IsSuccess ?
             NoContent() :
             response.ToProblem();
+    }
+    
+
+    [HttpPut("toggle-statues/{RoleId}")]
+    public async Task<IActionResult> ToggleStatues(string RoleId)
+    {
+        var response = await roleService.ToggleStatuesAsync(RoleId);
+
+        return response.IsSuccess ?
+            NoContent() :
+            response.ToProblem();
 
     }
 
