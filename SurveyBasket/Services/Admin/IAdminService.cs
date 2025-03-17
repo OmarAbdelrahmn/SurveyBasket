@@ -5,4 +5,5 @@ namespace SurveyBasket.Services.Admin;
 public interface IAdminService
 {
      Task<IEnumerable<UserResponse>> GetAllUsers();
+     Task<Result<UserResponse>> GetUserAsync(string Id);
 }

@@ -35,4 +35,16 @@ public class AdminService(UserManager<ApplicataionUser> manager , ApplicationDbc
                       c.SelectMany(x=>x.roles)
                       ))
                   .ToListAsync();
+
+    public async Task<Result<UserResponse>> GetUserAsync(string Id)
+    {
+        if(await manager.FindByIdAsync(Id) is not { } user)
+            return Result.Failure<UserResponse>(UserErrors.UserNotFound);
+
+        var userroles = await manager.GetRolesAsync(user);
+
+        var response = (user , userroles).Adapt<UserResponse>();  
+
+        return Result.Success(response);
+    }
 }
