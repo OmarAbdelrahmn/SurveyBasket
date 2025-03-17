@@ -27,6 +27,10 @@ public class AuthService(
 
         if (await manager.FindByEmailAsync(request.Email) is not { } user)
             return Result.Failure<AuthResponse>(UserErrors.InvalidCredentials);
+
+        if(user.IsDisable)
+            return Result.Failure<AuthResponse>(UserErrors.Disableuser);
+
         //using user manager
         //var TruePassword = await manager.CheckPasswordAsync(user, request.Password);
 
@@ -99,6 +103,9 @@ public class AuthService(
 
         if (user is null)
             return Result.Failure<AuthResponse>(UserErrors.InvalidCredentials);
+
+        if (user.IsDisable)
+            return Result.Failure<AuthResponse>(UserErrors.Disableuser);
 
         var UserRefreshToken = user.RefreshTokens.SingleOrDefault(x => x.Token == RefreshToken && x.IsActive);
 
