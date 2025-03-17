@@ -1,6 +1,7 @@
 ﻿
 using SurveyBasket.Abstraction.Consts;
 using SurveyBasket.Contracts.Roles;
+using System.Linq;
 
 namespace SurveyBasket.Services.Roles;
 
@@ -74,5 +75,58 @@ public class RoleService(RoleManager<ApplicationRole> roleManager , ApplicationD
             .ToListAsync();
 
         return Result.Success<IEnumerable<RolesResponse>>(roles);
+    }
+
+    public async Task<Result> UpdateRoleAsync(string Id, RoleRequest request)
+    {
+        if(await roleManager.FindByIdAsync(Id) is not  { } role )
+            return Result.Failure(RolesErrors.NotFound);
+
+        var roleisexists = await roleManager.Roles.AnyAsync(x=>x.Name == request.Name && x.Id != Id);
+
+        if (roleisexists)
+            return Result.Failure(RolesErrors.DaplicatedRole);
+
+        var allowpermission = Permissions.GetAllPermissions();
+
+        if (request.Permissions.Except(allowpermission).Any())
+            return Result.Failure(RolesErrors.InvalidPermissions);
+
+        role.Name = request.Name;
+
+        var result = await roleManager.UpdateAsync(role);
+
+        if (result.Succeeded)
+        {
+            var Currentpermissions = await dbcontext.RoleClaims
+                .Where(c=>c.RoleId == Id && c.ClaimType == Permissions.Type)
+                .Select(c=>c.ClaimValue)
+                .ToListAsync();
+
+            var newPermissions = request.Permissions
+                .Except(Currentpermissions).Select(x => new IdentityRoleClaim<string>
+                {
+                    ClaimType = Permissions.Type,
+                    ClaimValue = x,
+                    RoleId = role.Id
+                });
+
+            var removedPermissions = Currentpermissions.Except(request.Permissions);
+
+            await dbcontext.RoleClaims
+                .Where(c => c.RoleId == Id && removedPermissions.Contains(c.ClaimValue))
+                .ExecuteDeleteAsync();
+
+            await dbcontext.AddRangeAsync(newPermissions);
+            await dbcontext.SaveChangesAsync(); 
+
+            return Result.Success();
+
+        }
+
+        var error = result.Errors.First();
+        return Result.Failure(new Error(error.Code, error.Description, StatusCodes.Status400BadRequest));
+
+
     }
 }
