@@ -10,7 +10,7 @@ public class AdminController(IAdminService service) : ControllerBase
 {
     private readonly Services.Admin.IAdminService service = service;
 
-    [HttpGet]
+    [HttpGet("")]
     public async Task<IActionResult> GetUsers()
     {
         var users = await service.GetAllUsers();
@@ -18,5 +18,15 @@ public class AdminController(IAdminService service) : ControllerBase
         return users is not null ?
             Ok(users) :
             BadRequest();
+    }
+    
+    [HttpGet("{Id}")]
+    public async Task<IActionResult> GetUser(string Id)
+    {
+        var users = await service.GetUserAsync(Id);
+
+        return users.IsSuccess ?
+            Ok(users) :
+            users.ToProblem();
     }
 }

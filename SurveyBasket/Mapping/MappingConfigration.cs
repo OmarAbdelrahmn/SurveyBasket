@@ -1,4 +1,5 @@
 ﻿using SurveyBasket.Contracts.Questions;
+using SurveyBasket.Contracts.Users;
 
 namespace SurveyBasket.Mapping;
 
@@ -15,5 +16,9 @@ public class MappingConfigration : IRegister
         
         config.NewConfig<RegisterRequest, ApplicataionUser>()
             .Map(des => des.UserName, src => src.Email);
+        
+        config.NewConfig<(ApplicataionUser user , IList<string> userroles), UserResponse>()
+            .Map(des => des, src => src.user)
+            .Map(des => des.Roles, src => src.userroles);
     }
 }
