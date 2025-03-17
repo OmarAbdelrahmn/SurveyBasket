@@ -16,14 +16,23 @@ public class AdminService(UserManager<ApplicataionUser> manager , ApplicationDbc
                on ur.RoleId equals r.Id into roles
                //to not include members : where r.Name != DefaultRoles.Member  ||
                //where !roles.Any(c=>c.Name == DefaultRoles.Member)
-               select new UserResponse
-               (
+               select new
+               {
                    u.Id,
                    u.FirstName,
                    u.LastName,
-                   u.Email!,
+                   u.Email,
                    u.IsDisable,
-                   roles.Select(r=>r.Name!).ToList()
-                ))
+                   roles = roles.Select(r => r.Name!).ToList()
+               })
+                  .GroupBy(x=> new {x.Id , x.FirstName , x.LastName , x.Email , x.IsDisable})
+                  .Select(c=> new UserResponse (
+                      c.Key.Id,
+                      c.Key.FirstName,
+                      c.Key.LastName,   
+                      c.Key.Email,
+                      c.Key.IsDisable,
+                      c.SelectMany(x=>x.roles)
+                      ))
                   .ToListAsync();
 }
