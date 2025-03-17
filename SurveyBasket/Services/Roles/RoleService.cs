@@ -77,6 +77,7 @@ public class RoleService(RoleManager<ApplicationRole> roleManager , ApplicationD
         return Result.Success<IEnumerable<RolesResponse>>(roles);
     }
 
+  
     public async Task<Result> UpdateRoleAsync(string Id, RoleRequest request)
     {
         if(await roleManager.FindByIdAsync(Id) is not  { } role )
@@ -104,7 +105,8 @@ public class RoleService(RoleManager<ApplicationRole> roleManager , ApplicationD
                 .ToListAsync();
 
             var newPermissions = request.Permissions
-                .Except(Currentpermissions).Select(x => new IdentityRoleClaim<string>
+                .Except(Currentpermissions)
+                .Select(x => new IdentityRoleClaim<string>
                 {
                     ClaimType = Permissions.Type,
                     ClaimValue = x,

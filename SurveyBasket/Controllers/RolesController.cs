@@ -42,5 +42,16 @@ public class RolesController(IRoleService roleService) : ControllerBase
             response.ToProblem();
 
     }
+    
+    [HttpPut("{RoleId}")]
+    public async Task<IActionResult> Updaterole(string RoleId , RoleRequest request)
+    {
+        var response = await roleService.UpdateRoleAsync(RoleId , request);
+
+        return response.IsSuccess ?
+            NoContent() :
+            response.ToProblem();
+
+    }
 
 }
