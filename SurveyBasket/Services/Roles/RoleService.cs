@@ -77,7 +77,7 @@ public class RoleService(RoleManager<ApplicationRole> roleManager , ApplicationD
         return Result.Success<IEnumerable<RolesResponse>>(roles);
     }
 
-    public async Task<Result> ToggleStatuesAsync(string RollId)
+    public async Task<Result> ToggleStatusAsync(string RollId)
     {
         if (await roleManager.FindByIdAsync(RollId) is not { } role)
             return Result.Failure(RolesErrors.NotFound);
