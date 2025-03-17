@@ -1,4 +1,5 @@
-﻿using SurveyBasket.Contracts.Users;
+﻿using SurveyBasket.Abstraction.Consts;
+using SurveyBasket.Contracts.Users;
 
 namespace SurveyBasket.Services.Admin;
 
@@ -13,7 +14,8 @@ public class AdminService(UserManager<ApplicataionUser> manager , ApplicationDbc
                on u.Id equals ur.UserId
                join r in dbcontext.Roles
                on ur.RoleId equals r.Id into roles
-               //to not include members : where r.Name != DefaultRoles.Member  || where !roles.any(c=>c.name == DefaultRoles.Member)
+               //to not include members : where r.Name != DefaultRoles.Member  ||
+               //where !roles.Any(c=>c.Name == DefaultRoles.Member)
                select new UserResponse
                (
                    u.Id,
