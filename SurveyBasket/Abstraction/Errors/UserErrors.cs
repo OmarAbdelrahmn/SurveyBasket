@@ -7,4 +7,5 @@ public static class UserErrors
    public static readonly Error EmailNotConfirmed = new("User.EmailNotConfirmed", "this email is not confirmed", StatusCodes.Status401Unauthorized);
     public static readonly Error UserNotFound = new("User.UserNotFound", "User not found", StatusCodes.Status401Unauthorized);
     public static readonly Error Disableuser = new("User.UserDisable", "User is disable , contact the administrator", StatusCodes.Status401Unauthorized);
+    public static readonly Error userLockedout = new("User.LockedUser", "User is locked , contact the administrator", StatusCodes.Status401Unauthorized);
 }

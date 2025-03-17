@@ -40,7 +40,7 @@ public class AuthService(
 
 
         //using signin manager
-        var result = await signInManager.PasswordSignInAsync(user, request.Password, false, false);
+        var result = await signInManager.PasswordSignInAsync(user, request.Password, false, true);
 
         if (result.Succeeded)
         {
@@ -83,7 +83,14 @@ public class AuthService(
             return Result.Success(response);
         }
 
-        return Result.Failure<AuthResponse>(result.IsNotAllowed ? UserErrors.EmailNotConfirmed : UserErrors.InvalidCredentials);
+        var error = result.IsNotAllowed ?
+             UserErrors.EmailNotConfirmed :
+             result.IsLockedOut ?
+             UserErrors.userLockedout :
+             UserErrors.InvalidCredentials; 
+
+
+        return Result.Failure<AuthResponse>(error);
 
     }
 
@@ -106,6 +113,10 @@ public class AuthService(
 
         if (user.IsDisable)
             return Result.Failure<AuthResponse>(UserErrors.Disableuser);
+
+        if(user.LockoutEnd > DateTime.UtcNow)
+            return Result.Failure<AuthResponse>(UserErrors.userLockedout);
+
 
         var UserRefreshToken = user.RefreshTokens.SingleOrDefault(x => x.Token == RefreshToken && x.IsActive);
 
