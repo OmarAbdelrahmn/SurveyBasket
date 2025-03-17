@@ -1,0 +1,8 @@
+﻿using SurveyBasket.Contracts.Users;
+
+namespace SurveyBasket.Services.Admin;
+
+public interface IAdminService
+{
+     Task<IEnumerable<UserResponse>> GetAllUsers();
+}

@@ -1,6 +1,7 @@
 ﻿
 using SurveyBasket.Authentication.Filters;
 using SurveyBasket.Services.AddResults;
+using SurveyBasket.Services.Admin;
 using SurveyBasket.Services.Notification;
 using SurveyBasket.Services.Roles;
 using SurveyBasket.Services.User;
@@ -20,6 +21,7 @@ public static class DependencyInjection
         Services.AddEndpointsApiExplorer();
         Services.AddHttpContextAccessor();
         Services.AddScoped<IPollsService, PollsService>();
+        Services.AddScoped<IAdminService, AdminService>();
         Services.AddScoped<IRoleService, RoleService>();
         Services.AddScoped<IUserService, UserServices>();
         Services.AddScoped<INotificationService, NotificationService>();
