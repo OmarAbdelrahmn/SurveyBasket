@@ -9,4 +9,5 @@ public interface IAdminService
      Task<Result<UserResponse>> AddUserAsync(CreateUserRequest request);
      Task<Result> UpdateUserAsync(string UserId , UpdateUserRequest request);
      Task<Result> ToggleStatusAsync(string UserId);
+     Task<Result> EndLockOutAsync(string UserId);
 }

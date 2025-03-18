@@ -44,6 +44,20 @@ public class AdminService(
             return Result.Failure<UserResponse>(new Error(error.Code , error.Description , StatusCodes.Status400BadRequest));
     }
 
+    public async Task<Result> EndLockOutAsync(string UserId)
+    {
+        if (await manager.FindByIdAsync(UserId) is not { } user)
+            return Result.Failure(UserErrors.UserNotFound);
+
+        var result = await manager.SetLockoutEndDateAsync(user , null);
+
+        if (result.Succeeded)
+            return Result.Success();
+
+        var error = result.Errors.First();
+        return Result.Failure(new Error(error.Code, error.Description, StatusCodes.Status400BadRequest));
+    }
+
     public async Task<IEnumerable<UserResponse>> GetAllUsers() =>
         await (from u in dbcontext.Users
                join ur in dbcontext.UserRoles
