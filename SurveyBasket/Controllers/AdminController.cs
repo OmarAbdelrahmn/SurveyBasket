@@ -48,4 +48,13 @@ public class AdminController(IAdminService service) : ControllerBase
             NoContent() :
             user.ToProblem();
     }
+    
+    [HttpPut("toggle-status/{UserId}")]
+    public async Task<IActionResult> ToggleStatusAsync(string UserId)
+    {
+        var user = await service.ToggleStatusAsync(UserId);
+        return user.IsSuccess ?
+            NoContent() :
+            user.ToProblem();
+    }
 }
