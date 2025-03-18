@@ -80,4 +80,44 @@ public class AdminService(UserManager<ApplicataionUser> manager , ApplicationDbc
 
         return Result.Success(response);
     }
+
+    public async Task<Result> UpdateUserAsync(string UserId , UpdateUserRequest request)
+    {
+
+        if (await manager.FindByIdAsync(UserId) is not { } user)
+            return Result.Failure(UserErrors.UserNotFound);
+
+        var duplicatedEmail = await manager.Users.AnyAsync(c => c.Email == request.Email && c.Id != UserId);
+
+        if (duplicatedEmail)
+            return Result.Failure(UserErrors.EmailAlreadyExist);
+
+        var allowedroles = await roleService.GetRolesAsync();
+
+        if (request.Roles.Except(allowedroles.Value.Select(c => c.Name)).Any())
+            return Result.Failure(RolesErrors.InvalidRoles);
+
+        user = request.Adapt(user);
+
+        user.UserName = request.Email;
+        user.NormalizedUserName = request.Email.ToUpper();
+
+        var result = await manager.UpdateAsync(user);
+
+        if (result.Succeeded)
+        {
+
+            await dbcontext.UserRoles
+                .Where(c => c.UserId == UserId)
+                .ExecuteDeleteAsync();
+
+            await manager.AddToRolesAsync(user, request.Roles);
+
+            return Result.Success();
+        }
+
+        var error = result.Errors.First();
+        return Result.Failure(new Error(error.Code, error.Description, StatusCodes.Status400BadRequest));
+
+    }
 }
