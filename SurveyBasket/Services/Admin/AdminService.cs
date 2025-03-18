@@ -1,12 +1,45 @@
 ﻿using SurveyBasket.Abstraction.Consts;
 using SurveyBasket.Contracts.Users;
+using SurveyBasket.Services.Roles;
 
 namespace SurveyBasket.Services.Admin;
 
-public class AdminService(UserManager<ApplicataionUser> manager , ApplicationDbcontext dbcontext) : IAdminService
+public class AdminService(UserManager<ApplicataionUser> manager , ApplicationDbcontext dbcontext,IRoleService roleService) : IAdminService
 {
     private readonly UserManager<ApplicataionUser> manager = manager;
     private readonly ApplicationDbcontext dbcontext = dbcontext;
+    private readonly IRoleService roleService = roleService;
+
+    public async Task<Result<UserResponse>> AddUserAsync(CreateUserRequest request)
+    {
+        var EmailIsexist = await manager.Users.AnyAsync(c => c.Email == request.Email);
+
+        if (EmailIsexist)
+            return Result.Failure<UserResponse>(UserErrors.EmailAlreadyExist);
+
+        var allowedroles = await roleService.GetRolesAsync();
+
+        if(request.Roles.Except(allowedroles.Value.Select(c=>c.Name)).Any())
+            return Result.Failure<UserResponse>(RolesErrors.InvalidRoles);
+
+        var user = request.Adapt<ApplicataionUser>();
+        user.UserName = request.Email;
+        user.EmailConfirmed = true;
+
+        var result = await manager.CreateAsync(user, request.Password);
+
+        if (result.Succeeded)
+        {
+            await manager.AddToRolesAsync(user, request.Roles);
+
+            var response = (user, request.Roles).Adapt<UserResponse>();
+
+            return Result.Success(response);
+        }
+
+        var error = result.Errors.First();
+            return Result.Failure<UserResponse>(new Error(error.Code , error.Description , StatusCodes.Status400BadRequest));
+    }
 
     public async Task<IEnumerable<UserResponse>> GetAllUsers() =>
         await (from u in dbcontext.Users

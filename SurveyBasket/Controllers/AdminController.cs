@@ -23,10 +23,10 @@ public class AdminController(IAdminService service) : ControllerBase
     [HttpGet("{Id}")]
     public async Task<IActionResult> GetUser(string Id)
     {
-        var users = await service.GetUserAsync(Id);
+        var user = await service.GetUserAsync(Id);
 
-        return users.IsSuccess ?
-            Ok(users) :
-            users.ToProblem();
+        return user.IsSuccess ?
+            Ok(user.Value) :
+            user.ToProblem();
     }
 }
