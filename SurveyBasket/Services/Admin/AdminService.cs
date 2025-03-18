@@ -4,7 +4,10 @@ using SurveyBasket.Services.Roles;
 
 namespace SurveyBasket.Services.Admin;
 
-public class AdminService(UserManager<ApplicataionUser> manager , ApplicationDbcontext dbcontext,IRoleService roleService) : IAdminService
+public class AdminService(
+     UserManager<ApplicataionUser> manager
+    ,ApplicationDbcontext dbcontext
+    ,IRoleService roleService) : IAdminService
 {
     private readonly UserManager<ApplicataionUser> manager = manager;
     private readonly ApplicationDbcontext dbcontext = dbcontext;
@@ -79,6 +82,21 @@ public class AdminService(UserManager<ApplicataionUser> manager , ApplicationDbc
         var response = (user , userroles).Adapt<UserResponse>();  
 
         return Result.Success(response);
+    }
+
+    public async Task<Result> ToggleStatusAsync(string UserId)
+    {
+        if (await manager.FindByIdAsync(UserId) is not { } user)
+            return Result.Failure(UserErrors.UserNotFound);
+
+        user.IsDisable = !user.IsDisable;
+
+        var result = await manager.UpdateAsync(user);
+        if(result.Succeeded)
+            return Result.Success();
+
+        var error = result.Errors.First();
+        return Result.Failure(new Error(error.Code , error.Description , StatusCodes.Status400BadRequest));
     }
 
     public async Task<Result> UpdateUserAsync(string UserId , UpdateUserRequest request)

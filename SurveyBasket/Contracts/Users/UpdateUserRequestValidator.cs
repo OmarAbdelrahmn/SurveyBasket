@@ -30,5 +30,5 @@ public class UpdateUserRequestValidator : AbstractValidator<UpdateUserRequest>
             .WithMessage("you can't add duplicated permission for the role")
             .When(c => c.Roles != null);
     }
-{
+
 }

@@ -39,4 +39,13 @@ public class AdminController(IAdminService service) : ControllerBase
             Ok(user.Value) :
             user.ToProblem();
     }
+    
+    [HttpPut("{UserId}")]
+    public async Task<IActionResult> UpdateUser(string UserId , UpdateUserRequest request)
+    {
+        var user = await service.UpdateUserAsync(UserId , request);
+        return user.IsSuccess ?
+            NoContent() :
+            user.ToProblem();
+    }
 }
