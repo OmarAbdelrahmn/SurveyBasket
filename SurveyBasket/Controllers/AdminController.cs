@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SurveyBasket.Contracts.Users;
 using SurveyBasket.Services.Admin;
 using SurveyBasket.Services.User;
 
@@ -25,6 +26,15 @@ public class AdminController(IAdminService service) : ControllerBase
     {
         var user = await service.GetUserAsync(Id);
 
+        return user.IsSuccess ?
+            Ok(user.Value) :
+            user.ToProblem();
+    }
+
+    [HttpPost("")]
+    public async Task<IActionResult> AddUser(CreateUserRequest request)
+    {
+        var user = await service.AddUserAsync(request);
         return user.IsSuccess ?
             Ok(user.Value) :
             user.ToProblem();
