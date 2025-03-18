@@ -57,4 +57,14 @@ public class AdminController(IAdminService service) : ControllerBase
             NoContent() :
             user.ToProblem();
     }
+    
+    
+    [HttpPut("unlock-user/{UserId}")]
+    public async Task<IActionResult> UnclockUserAsync(string UserId)
+    {
+        var user = await service.EndLockOutAsync(UserId);
+        return user.IsSuccess ?
+            NoContent() :
+            user.ToProblem();
+    }
 }
