@@ -6,7 +6,7 @@ namespace SurveyBasket.Controllers;
 [Route("polls/{PollId}/[controller]")]
 [ApiController]
 [Authorize(Roles = DefaultRoles.Member)]
-public class VotesController(IQuestionService service , IVotesService service1) : ControllerBase
+public class VotesController(IQuestionService service, IVotesService service1) : ControllerBase
 {
     private readonly IQuestionService service = service;
     private readonly IVotesService service1 = service1;
@@ -16,20 +16,20 @@ public class VotesController(IQuestionService service , IVotesService service1) 
     {
         var userId = User.GetUserId();
 
-        var result = await service.GetAvailableAsync(PollId , userId!);
+        var result = await service.GetAvailableAsync(PollId, userId!);
 
         if (result.IsSuccess)
             return Ok(result.Value);
 
         return result.ToProblem();
     }
-    
+
     [HttpPost("")]
-    public async Task<IActionResult> AddVote([FromRoute]int PollId,[FromBody] VotesRequest request)
+    public async Task<IActionResult> AddVote([FromRoute] int PollId, [FromBody] VotesRequest request)
     {
         var userId = User.GetUserId();
 
-        var result = await service1.AddVote(PollId , userId!, request);
+        var result = await service1.AddVote(PollId, userId!, request);
 
         if (result.IsSuccess)
             return Created();

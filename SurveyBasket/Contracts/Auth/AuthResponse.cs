@@ -2,7 +2,7 @@
 
 public record AuthResponse
 (
-    string Id ,
+    string Id,
     string email,
     string FirstName,
     string LastName,

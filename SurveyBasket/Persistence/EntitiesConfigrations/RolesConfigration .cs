@@ -3,7 +3,7 @@ using SurveyBasket.Abstraction.Consts;
 
 namespace SurveyBasket.Persistence.EntitiesConfigrations;
 
-public class RolesConfigration :IEntityTypeConfiguration<ApplicationRole>
+public class RolesConfigration : IEntityTypeConfiguration<ApplicationRole>
 {
     public void Configure(EntityTypeBuilder<ApplicationRole> builder)
     {
@@ -30,7 +30,7 @@ public class RolesConfigration :IEntityTypeConfiguration<ApplicationRole>
                 }
             ]
         );
-        
+
     }
 }
 

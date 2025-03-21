@@ -1,6 +1,4 @@
-﻿using SurveyBasket.Abstraction.Consts;
-
-namespace SurveyBasket.Contracts.Users;
+﻿namespace SurveyBasket.Contracts.Users;
 
 public class UpdateUserRequestValidator : AbstractValidator<UpdateUserRequest>
 {

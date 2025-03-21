@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SurveyBasket.Contracts.Questions;
-using SurveyBasket.Contracts.Votes;
+﻿using SurveyBasket.Contracts.Votes;
 
 namespace SurveyBasket.Services.Votes;
 
@@ -18,11 +16,11 @@ public class VotesService(ApplicationDbcontext dbcontext) : IVotesService
         if (!PollIsExist)
             return Result.Failure(PollsErrors.NotFound);
 
-        var questionId = await dbcontext.Questions.Where(x=>x.PollsId == PollId && x.IsActive).Select(x => x.Id).ToListAsync();
+        var questionId = await dbcontext.Questions.Where(x => x.PollsId == PollId && x.IsActive).Select(x => x.Id).ToListAsync();
 
-        if(!request.Answers.Select(x => x.QuestionId).SequenceEqual(questionId))
+        if (!request.Answers.Select(x => x.QuestionId).SequenceEqual(questionId))
             return Result.Failure(QuestionErrors.InvalidQuestions);
-         
+
         var Vote = new Vote()
         {
             PollId = PollId,

@@ -1,7 +1,4 @@
-﻿
-using SurveyBasket.Contracts.Auth.RefreshToken;
-
-namespace SurveyBasket.Contracts.Auth.RefreshToken;
+﻿namespace SurveyBasket.Contracts.Auth.RefreshToken;
 
 public class RefreshTokenRequestValidator : AbstractValidator<RefreshTokenRequest>
 {
@@ -16,4 +13,5 @@ public class RefreshTokenRequestValidator : AbstractValidator<RefreshTokenReques
             .NotEmpty()
             .WithMessage("RefreshToken is required");
 
-    } }
+    }
+}

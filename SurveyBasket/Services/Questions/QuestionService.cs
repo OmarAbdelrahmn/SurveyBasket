@@ -1,6 +1,4 @@
-﻿using SurveyBasket.Abstraction;
-using SurveyBasket.Abstraction.Errors;
-using SurveyBasket.Contracts.Answers;
+﻿using SurveyBasket.Contracts.Answers;
 using SurveyBasket.Contracts.Questions;
 
 namespace SurveyBasket.Services.Questions;
@@ -11,7 +9,7 @@ public class QuestionService(ApplicationDbcontext dbcontext) : IQuestionService
 
     public async Task<Result<QuestionResponse>> AddAsync(int PollId, QuestionRequest request)
     {
-        var IsExpoll = await dbcontext.Polls.AnyAsync(r=>r.Id==PollId);
+        var IsExpoll = await dbcontext.Polls.AnyAsync(r => r.Id == PollId);
 
         if (!IsExpoll)
             return Result.Failure<QuestionResponse>(PollsErrors.NotFound);
@@ -35,7 +33,7 @@ public class QuestionService(ApplicationDbcontext dbcontext) : IQuestionService
 
     public async Task<Result<IEnumerable<QuestionResponse>>> GetAllAsync(int PollId)
     {
-        var pollIsExist =await dbcontext.Polls.AnyAsync(r => r.Id == PollId);
+        var pollIsExist = await dbcontext.Polls.AnyAsync(r => r.Id == PollId);
 
         if (!pollIsExist)
             return Result.Failure<IEnumerable<QuestionResponse>>(PollsErrors.NotFound);
@@ -59,7 +57,7 @@ public class QuestionService(ApplicationDbcontext dbcontext) : IQuestionService
 
         var question = await dbcontext.Questions
             .Where(r => r.PollsId == PollId && r.Id == Id)
-            .Include(i=>i.Answers)
+            .Include(i => i.Answers)
             .ProjectToType<QuestionResponse>()
             .SingleOrDefaultAsync();
 
@@ -77,16 +75,16 @@ public class QuestionService(ApplicationDbcontext dbcontext) : IQuestionService
         if (isExist)
             return Result.Failure<IEnumerable<QuestionResponse>>(VotesErrors.DaplicatedVote);
 
-        var PollIsExist = await dbcontext.Polls.AnyAsync(x => x.Id == PollId&& x.IsPublished && x.StartsAt <= DateOnly.FromDateTime(DateTime.UtcNow) && x.EndsAt >= DateOnly.FromDateTime(DateTime.UtcNow));
+        var PollIsExist = await dbcontext.Polls.AnyAsync(x => x.Id == PollId && x.IsPublished && x.StartsAt <= DateOnly.FromDateTime(DateTime.UtcNow) && x.EndsAt >= DateOnly.FromDateTime(DateTime.UtcNow));
 
         if (!PollIsExist)
             return Result.Failure<IEnumerable<QuestionResponse>>(PollsErrors.NotFound);
 
         var questions = await dbcontext.Questions
-            .Where(x=>x.PollsId == PollId && x.IsActive)
+            .Where(x => x.PollsId == PollId && x.IsActive)
             .Include(i => i.Answers)
             .Select(q => new QuestionResponse(
-            
+
                  q.Id,
                 q.Content,
                 q.Answers.Where(c => c.IsActive).Select(r => new AnswerResponse(r.Id, r.Content)).ToList()
@@ -101,7 +99,7 @@ public class QuestionService(ApplicationDbcontext dbcontext) : IQuestionService
     {
         var questionIsExist = await dbcontext.Questions.AnyAsync(
             f => f.PollsId == PollId
-            && f.Id != Id 
+            && f.Id != Id
             && f.Content == request.Content);
 
         if (questionIsExist)

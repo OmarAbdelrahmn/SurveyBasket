@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SurveyBasket.Contracts.Roles;
+﻿using SurveyBasket.Contracts.Roles;
 using SurveyBasket.Services.Roles;
 
 namespace SurveyBasket.Controllers;
@@ -20,7 +18,7 @@ public class RolesController(IRoleService roleService) : ControllerBase
             response.ToProblem();
 
     }
-    
+
     [HttpGet("role-permissions/{RoleId}")]
     public async Task<IActionResult> GetRolePermission(string RoleId)
     {
@@ -31,7 +29,7 @@ public class RolesController(IRoleService roleService) : ControllerBase
             response.ToProblem();
 
     }
-    
+
     [HttpPost("")]
     public async Task<IActionResult> addrole(RoleRequest request)
     {
@@ -42,17 +40,17 @@ public class RolesController(IRoleService roleService) : ControllerBase
             response.ToProblem();
 
     }
-    
+
     [HttpPut("{RoleId}")]
-    public async Task<IActionResult> Updaterole(string RoleId , RoleRequest request)
+    public async Task<IActionResult> Updaterole(string RoleId, RoleRequest request)
     {
-        var response = await roleService.UpdateRoleAsync(RoleId , request);
+        var response = await roleService.UpdateRoleAsync(RoleId, request);
 
         return response.IsSuccess ?
             NoContent() :
             response.ToProblem();
     }
-    
+
 
     [HttpPut("toggle-status/{RoleId}")]
     public async Task<IActionResult> ToggleStatus(string RoleId)

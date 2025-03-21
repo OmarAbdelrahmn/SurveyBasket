@@ -9,7 +9,7 @@ public class PollRequestValidator : AbstractValidator<PollRequest>
         RuleFor(x => x.Title)
             .NotEmpty()
             .WithMessage("Title is required")
-            .Length(3,55);
+            .Length(3, 55);
 
         RuleFor(x => x.Summary)
             .NotEmpty()
@@ -23,7 +23,7 @@ public class PollRequestValidator : AbstractValidator<PollRequest>
         RuleFor(RuleFor => RuleFor.StartsAt)
             .NotEmpty();
 
-        RuleFor(x=>x)
+        RuleFor(x => x)
             .Must(validdate)
             .WithMessage("End date must be greater than start date");
 

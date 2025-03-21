@@ -1,7 +1,4 @@
-﻿using SurveyBasket.Abstraction.Consts;
-using SurveyBasket.Contracts.Roles;
-
-namespace SurveyBasket.Contracts.Roles;
+﻿namespace SurveyBasket.Contracts.Roles;
 
 public class RoleRequestValidator : AbstractValidator<RoleRequest>
 {
@@ -9,7 +6,7 @@ public class RoleRequestValidator : AbstractValidator<RoleRequest>
     {
         RuleFor(i => i.Name)
             .NotEmpty()
-            .Length(3,256);
+            .Length(3, 256);
 
 
         RuleFor(i => i.Permissions)
@@ -20,7 +17,7 @@ public class RoleRequestValidator : AbstractValidator<RoleRequest>
         RuleFor(i => i.Permissions)
             .Must(i => i.Distinct().Count() == i.Count)
             .WithMessage("you can't add duplicated permission for the role")
-            .When(c=>c.Permissions != null);
+            .When(c => c.Permissions != null);
 
 
     }

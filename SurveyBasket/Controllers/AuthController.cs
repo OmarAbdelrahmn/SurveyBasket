@@ -1,5 +1,4 @@
-﻿using SurveyBasket.Abstraction;
-using SurveyBasket.Contracts.Auth.RefreshToken;
+﻿using SurveyBasket.Contracts.Auth.RefreshToken;
 
 namespace SurveyBasket.Controllers;
 
@@ -14,7 +13,7 @@ public class AuthController(IAuthService service) : ControllerBase
         var response = await service.SingInAsync(request);
 
         return response.IsSuccess ?
-            Ok(response.Value) : 
+            Ok(response.Value) :
             response.ToProblem();
     }
 
@@ -27,7 +26,7 @@ public class AuthController(IAuthService service) : ControllerBase
             Ok() :
             response.ToProblem();
     }
-    
+
     [HttpPost("confirm-email")]
     public async Task<IActionResult> ConfirmEmailAsync([FromBody] ConfigrationEmailRequest request)
     {
@@ -60,7 +59,7 @@ public class AuthController(IAuthService service) : ControllerBase
             Ok(response.Value) :
             response.ToProblem();
     }
-    
+
 
 
     [HttpPost("revoke-refresh-token")]
@@ -72,7 +71,7 @@ public class AuthController(IAuthService service) : ControllerBase
             Ok() :
             response.ToProblem();
     }
-    
+
     [HttpPost("forget-password")]
     public async Task<IActionResult> ForgetPassword([FromBody] ForgetPasswordRequest request)
     {
@@ -82,7 +81,7 @@ public class AuthController(IAuthService service) : ControllerBase
                 Ok() :
                 response.ToProblem();
     }
-    
+
     [HttpPost("reset-password")]
     public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
     {

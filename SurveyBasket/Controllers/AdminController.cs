@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SurveyBasket.Contracts.Users;
+﻿using SurveyBasket.Contracts.Users;
 using SurveyBasket.Services.Admin;
-using SurveyBasket.Services.User;
 
 namespace SurveyBasket.Controllers;
 [Route("[controller]")]
@@ -20,7 +17,7 @@ public class AdminController(IAdminService service) : ControllerBase
             Ok(users) :
             BadRequest();
     }
-    
+
     [HttpGet("{Id}")]
     public async Task<IActionResult> GetUser(string Id)
     {
@@ -39,16 +36,16 @@ public class AdminController(IAdminService service) : ControllerBase
             Ok(user.Value) :
             user.ToProblem();
     }
-    
+
     [HttpPut("{UserId}")]
-    public async Task<IActionResult> UpdateUser(string UserId , UpdateUserRequest request)
+    public async Task<IActionResult> UpdateUser(string UserId, UpdateUserRequest request)
     {
-        var user = await service.UpdateUserAsync(UserId , request);
+        var user = await service.UpdateUserAsync(UserId, request);
         return user.IsSuccess ?
             NoContent() :
             user.ToProblem();
     }
-    
+
     [HttpPut("toggle-status/{UserId}")]
     public async Task<IActionResult> ToggleStatusAsync(string UserId)
     {
@@ -57,8 +54,8 @@ public class AdminController(IAdminService service) : ControllerBase
             NoContent() :
             user.ToProblem();
     }
-    
-    
+
+
     [HttpPut("unlock-user/{UserId}")]
     public async Task<IActionResult> UnclockUserAsync(string UserId)
     {

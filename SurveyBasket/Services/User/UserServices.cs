@@ -10,23 +10,23 @@ public class UserServices(UserManager<ApplicataionUser> manager) : IUserService
     {
         var user = await manager.FindByIdAsync(id);
 
-        var result = await manager.ChangePasswordAsync(user!, request.CurrentPassword,request.NewPassord);
+        var result = await manager.ChangePasswordAsync(user!, request.CurrentPassword, request.NewPassord);
 
         if (result.Succeeded)
             return Result.Success();
 
         var error = result.Errors.First();
 
-        return Result.Failure(new Error(error.Code , error.Description , StatusCodes.Status400BadRequest));
+        return Result.Failure(new Error(error.Code, error.Description, StatusCodes.Status400BadRequest));
     }
 
     public async Task<Result<UserProfileResponse>> GetUserProfile(string id)
     {
         var user = await manager.Users
-            .Where(i=>i.Id == id)
+            .Where(i => i.Id == id)
             .ProjectToType<UserProfileResponse>()
             .SingleAsync();
-            ;
+        ;
 
         return Result.Success(user);
     }

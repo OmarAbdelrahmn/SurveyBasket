@@ -1,6 +1,4 @@
-﻿using SurveyBasket.Abstraction;
-
-namespace SurveyBasket.Services.Polls;
+﻿namespace SurveyBasket.Services.Polls;
 
 public interface IPollsService
 {
@@ -9,7 +7,7 @@ public interface IPollsService
     Task<Result<IEnumerable<PollResponse>>> GetPollsAsync();
     Task<Result<IEnumerable<PollResponse>>> GetCurrentAsync();
     Task<Result<PollResponse>> UpdatePollAsync(int pollId, PollRequest pollRequest);
-    Task<Result> DeletePollAsync(int pollId,CancellationToken cancellationToken = default);
+    Task<Result> DeletePollAsync(int pollId, CancellationToken cancellationToken = default);
 
     Task<Result> ToggleStatus(int Id);
 }

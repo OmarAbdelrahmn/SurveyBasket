@@ -7,14 +7,14 @@ public class RoleRequestValidator : AbstractValidator<ChangePasswordRequest>
     public RoleRequestValidator()
     {
         RuleFor(i => i.CurrentPassword)
-            .NotEmpty(); 
+            .NotEmpty();
 
 
-        RuleFor(i=>i.NewPassord)
+        RuleFor(i => i.NewPassord)
             .NotEmpty()
             .Matches(RegexPatterns.Password)
             .WithMessage("Password should be 8 digits and should contains Lowercase,Uppercase,Number and Special character ")
-            .NotEqual(c=>c.CurrentPassword)
+            .NotEqual(c => c.CurrentPassword)
             .WithMessage("New password can't be same as current one");
 
 

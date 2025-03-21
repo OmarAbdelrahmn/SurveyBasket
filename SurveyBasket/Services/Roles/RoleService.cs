@@ -1,11 +1,10 @@
 ﻿
 using SurveyBasket.Abstraction.Consts;
 using SurveyBasket.Contracts.Roles;
-using System.Linq;
 
 namespace SurveyBasket.Services.Roles;
 
-public class RoleService(RoleManager<ApplicationRole> roleManager , ApplicationDbcontext dbcontext) : IRoleService
+public class RoleService(RoleManager<ApplicationRole> roleManager, ApplicationDbcontext dbcontext) : IRoleService
 {
     private readonly RoleManager<ApplicationRole> roleManager = roleManager;
     private readonly ApplicationDbcontext dbcontext = dbcontext;
@@ -14,12 +13,12 @@ public class RoleService(RoleManager<ApplicationRole> roleManager , ApplicationD
     {
         var roleisexists = await roleManager.RoleExistsAsync(request.Name);
 
-        if(roleisexists)
+        if (roleisexists)
             return Result.Failure<RoleDetailsResponse>(RolesErrors.DaplicatedRole);
 
         var allowpermission = Permissions.GetAllPermissions();
 
-        if(request.Permissions.Except(allowpermission).Any())
+        if (request.Permissions.Except(allowpermission).Any())
             return Result.Failure<RoleDetailsResponse>(RolesErrors.InvalidPermissions);
 
         var role = new ApplicationRole
@@ -34,10 +33,10 @@ public class RoleService(RoleManager<ApplicationRole> roleManager , ApplicationD
         if (result.Succeeded)
         {
             var permissions = request.Permissions
-                .Select(x=>new IdentityRoleClaim<string>
+                .Select(x => new IdentityRoleClaim<string>
                 {
                     ClaimType = Permissions.Type,
-                    ClaimValue = x ,
+                    ClaimValue = x,
                     RoleId = role.Id
                 });
             await dbcontext.AddRangeAsync(permissions);
@@ -62,7 +61,7 @@ public class RoleService(RoleManager<ApplicationRole> roleManager , ApplicationD
 
         var permissions = await roleManager.GetClaimsAsync(role);
 
-        var response = new RoleDetailsResponse(role.Id,role.Name!,role.IsDeleted,permissions.Select(x=>x.Value));
+        var response = new RoleDetailsResponse(role.Id, role.Name!, role.IsDeleted, permissions.Select(x => x.Value));
 
         return Result.Success(response);
     }
@@ -70,7 +69,7 @@ public class RoleService(RoleManager<ApplicationRole> roleManager , ApplicationD
     public async Task<Result<IEnumerable<RolesResponse>>> GetRolesAsync(bool? IncludeDisable = false)
     {
         var roles = await roleManager.Roles
-            .Where(c=>!c.IsDeleted || IncludeDisable == true)
+            .Where(c => !c.IsDeleted || IncludeDisable == true)
             .ProjectToType<RolesResponse>()
             .ToListAsync();
 
@@ -91,10 +90,10 @@ public class RoleService(RoleManager<ApplicationRole> roleManager , ApplicationD
 
     public async Task<Result> UpdateRoleAsync(string Id, RoleRequest request)
     {
-        if(await roleManager.FindByIdAsync(Id) is not  { } role )
+        if (await roleManager.FindByIdAsync(Id) is not { } role)
             return Result.Failure(RolesErrors.NotFound);
 
-        var roleisexists = await roleManager.Roles.AnyAsync(x=>x.Name == request.Name && x.Id != Id);
+        var roleisexists = await roleManager.Roles.AnyAsync(x => x.Name == request.Name && x.Id != Id);
 
         if (roleisexists)
             return Result.Failure(RolesErrors.DaplicatedRole);
@@ -111,8 +110,8 @@ public class RoleService(RoleManager<ApplicationRole> roleManager , ApplicationD
         if (result.Succeeded)
         {
             var Currentpermissions = await dbcontext.RoleClaims
-                .Where(c=>c.RoleId == Id && c.ClaimType == Permissions.Type)
-                .Select(c=>c.ClaimValue)
+                .Where(c => c.RoleId == Id && c.ClaimType == Permissions.Type)
+                .Select(c => c.ClaimValue)
                 .ToListAsync();
 
             var newPermissions = request.Permissions
@@ -131,7 +130,7 @@ public class RoleService(RoleManager<ApplicationRole> roleManager , ApplicationD
                 .ExecuteDeleteAsync();
 
             await dbcontext.AddRangeAsync(newPermissions);
-            await dbcontext.SaveChangesAsync(); 
+            await dbcontext.SaveChangesAsync();
 
             return Result.Success();
 

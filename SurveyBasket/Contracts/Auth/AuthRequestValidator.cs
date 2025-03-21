@@ -10,10 +10,11 @@ public class RefreshTokenRequestValidator : AbstractValidator<AuthRequest>
             .NotEmpty()
             .WithMessage("Email is required")
             .EmailAddress();
-        
+
         RuleFor(x => x.Password)
             .NotEmpty()
             .WithMessage("Password is required")
-            .Length(8,50);
+            .Length(8, 50);
 
-    } }
+    }
+}

@@ -13,7 +13,7 @@ public static class DependencyInjection
 {
 
 
-    public static IServiceCollection AddDependencies(this IServiceCollection Services , IConfiguration configuration)
+    public static IServiceCollection AddDependencies(this IServiceCollection Services, IConfiguration configuration)
     {
 
         Services.AddControllers();
@@ -29,13 +29,13 @@ public static class DependencyInjection
         Services.AddScoped<IVotesService, VotesService>();
         Services.AddScoped<IQuestionService, QuestionService>();
         Services.AddScoped<IEmailSender, EmailService>();
-        Services.AddScoped<IAuthService,AuthService>();
+        Services.AddScoped<IAuthService, AuthService>();
         Services.AddScoped<IJwtProvider, JwtProvider>();
 
         Services.AddExceptionHandler<GlobalExceptionHandler>();
         Services.AddProblemDetails();
 
-        
+
 
         Services.AddAuth(configuration)
                 .AddMappester()
@@ -48,7 +48,7 @@ public static class DependencyInjection
 
 
         return Services;
-    } 
+    }
     public static IServiceCollection AddSwagger(this IServiceCollection Services)
     {
         Services.AddSwaggerGen(c =>
@@ -139,17 +139,17 @@ public static class DependencyInjection
     {
         Services.AddCors(options =>
         {
-            options.AddDefaultPolicy(builder=>
+            options.AddDefaultPolicy(builder =>
                 builder
                         //.WithMethods("GET", "POST", "PUT", "DELETE")
                         //.WithOrigins("http://localhost:3000")
                         .AllowAnyOrigin()
                         .AllowAnyMethod()
-                        .AllowAnyHeader() );
+                        .AllowAnyHeader());
         });
         return Services;
     }
-    public static IServiceCollection AddHangfire(this IServiceCollection Services,IConfiguration configuration)
+    public static IServiceCollection AddHangfire(this IServiceCollection Services, IConfiguration configuration)
     {
         Services.AddHangfire(config => config
         .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)

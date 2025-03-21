@@ -1,6 +1,4 @@
-﻿using SurveyBasket.Contracts.Votes;
-
-namespace SurveyBasket.Contracts.Votes;
+﻿namespace SurveyBasket.Contracts.Votes;
 
 public class VotesRequestValidator : AbstractValidator<VotesRequest>
 {
@@ -10,7 +8,7 @@ public class VotesRequestValidator : AbstractValidator<VotesRequest>
             .NotEmpty();
 
         RuleForEach(x => x.Answers)
-            .SetInheritanceValidator(v=>v.Add(new VotesAnswerRequestValidator()));
+            .SetInheritanceValidator(v => v.Add(new VotesAnswerRequestValidator()));
 
     }
 }

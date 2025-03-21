@@ -22,7 +22,7 @@ public class RoleClaimConfigration : IEntityTypeConfiguration<IdentityRoleClaim<
         //    });
         //}
 
-        for (int i = 0; i < permission.Count ; i++)
+        for (int i = 0; i < permission.Count; i++)
         {
             addmemberclaim.Add(new IdentityRoleClaim<string>
             {

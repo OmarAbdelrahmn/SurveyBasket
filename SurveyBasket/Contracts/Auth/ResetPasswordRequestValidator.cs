@@ -2,11 +2,11 @@
 
 namespace SurveyBasket.Contracts.Auth;
 
-public class ResetPasswordRequestValidator :  AbstractValidator<ResetPasswordRequest>
+public class ResetPasswordRequestValidator : AbstractValidator<ResetPasswordRequest>
 {
 
     public ResetPasswordRequestValidator()
-{
+    {
         RuleFor(x => x.Email)
             .NotEmpty()
             .WithMessage("Email is required")
@@ -21,6 +21,7 @@ public class ResetPasswordRequestValidator :  AbstractValidator<ResetPasswordReq
             .Matches(RegexPatterns.Password)
             .WithMessage("Password should be 8 digits and should contains Lowercase,Uppercase,Number and Special character ");
 
-        
-    } }
+
+    }
+}
 

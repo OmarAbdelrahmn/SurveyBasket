@@ -4,7 +4,7 @@ namespace SurveyBasket.Authentication;
 public class JwtOptions
 {
     [Required]
-    public string Issuer { get; init; } =string.Empty;
+    public string Issuer { get; init; } = string.Empty;
 
 
     [Required]

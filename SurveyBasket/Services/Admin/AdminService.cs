@@ -1,13 +1,12 @@
-﻿using SurveyBasket.Abstraction.Consts;
-using SurveyBasket.Contracts.Users;
+﻿using SurveyBasket.Contracts.Users;
 using SurveyBasket.Services.Roles;
 
 namespace SurveyBasket.Services.Admin;
 
 public class AdminService(
      UserManager<ApplicataionUser> manager
-    ,ApplicationDbcontext dbcontext
-    ,IRoleService roleService) : IAdminService
+    , ApplicationDbcontext dbcontext
+    , IRoleService roleService) : IAdminService
 {
     private readonly UserManager<ApplicataionUser> manager = manager;
     private readonly ApplicationDbcontext dbcontext = dbcontext;
@@ -22,7 +21,7 @@ public class AdminService(
 
         var allowedroles = await roleService.GetRolesAsync();
 
-        if(request.Roles.Except(allowedroles.Value.Select(c=>c.Name)).Any())
+        if (request.Roles.Except(allowedroles.Value.Select(c => c.Name)).Any())
             return Result.Failure<UserResponse>(RolesErrors.InvalidRoles);
 
         var user = request.Adapt<ApplicataionUser>();
@@ -41,7 +40,7 @@ public class AdminService(
         }
 
         var error = result.Errors.First();
-            return Result.Failure<UserResponse>(new Error(error.Code , error.Description , StatusCodes.Status400BadRequest));
+        return Result.Failure<UserResponse>(new Error(error.Code, error.Description, StatusCodes.Status400BadRequest));
     }
 
     public async Task<Result> EndLockOutAsync(string UserId)
@@ -49,7 +48,7 @@ public class AdminService(
         if (await manager.FindByIdAsync(UserId) is not { } user)
             return Result.Failure(UserErrors.UserNotFound);
 
-        var result = await manager.SetLockoutEndDateAsync(user , null);
+        var result = await manager.SetLockoutEndDateAsync(user, null);
 
         if (result.Succeeded)
             return Result.Success();
@@ -75,25 +74,25 @@ public class AdminService(
                    u.IsDisable,
                    roles = roles.Select(r => r.Name!).ToList()
                })
-                  .GroupBy(x=> new {x.Id , x.FirstName , x.LastName , x.Email , x.IsDisable})
-                  .Select(c=> new UserResponse (
+                  .GroupBy(x => new { x.Id, x.FirstName, x.LastName, x.Email, x.IsDisable })
+                  .Select(c => new UserResponse(
                       c.Key.Id,
                       c.Key.FirstName,
-                      c.Key.LastName,   
+                      c.Key.LastName,
                       c.Key.Email,
                       c.Key.IsDisable,
-                      c.SelectMany(x=>x.roles)
+                      c.SelectMany(x => x.roles)
                       ))
                   .ToListAsync();
 
     public async Task<Result<UserResponse>> GetUserAsync(string Id)
     {
-        if(await manager.FindByIdAsync(Id) is not { } user)
+        if (await manager.FindByIdAsync(Id) is not { } user)
             return Result.Failure<UserResponse>(UserErrors.UserNotFound);
 
         var userroles = await manager.GetRolesAsync(user);
 
-        var response = (user , userroles).Adapt<UserResponse>();  
+        var response = (user, userroles).Adapt<UserResponse>();
 
         return Result.Success(response);
     }
@@ -106,14 +105,14 @@ public class AdminService(
         user.IsDisable = !user.IsDisable;
 
         var result = await manager.UpdateAsync(user);
-        if(result.Succeeded)
+        if (result.Succeeded)
             return Result.Success();
 
         var error = result.Errors.First();
-        return Result.Failure(new Error(error.Code , error.Description , StatusCodes.Status400BadRequest));
+        return Result.Failure(new Error(error.Code, error.Description, StatusCodes.Status400BadRequest));
     }
 
-    public async Task<Result> UpdateUserAsync(string UserId , UpdateUserRequest request)
+    public async Task<Result> UpdateUserAsync(string UserId, UpdateUserRequest request)
     {
 
         if (await manager.FindByIdAsync(UserId) is not { } user)

@@ -1,6 +1,3 @@
-
-
-using Hangfire;
 using HangfireBasicAuthenticationFilter;
 using Serilog;
 using SurveyBasket.Services.Notification;
@@ -56,7 +53,7 @@ var notificationService = scope.ServiceProvider
 
 
 RecurringJob
-    .AddOrUpdate("SendNewPollNotification", ()=> notificationService.SendNewPollNotification(null) , Cron.Daily);
+    .AddOrUpdate("SendNewPollNotification", () => notificationService.SendNewPollNotification(null), Cron.Daily);
 
 
 

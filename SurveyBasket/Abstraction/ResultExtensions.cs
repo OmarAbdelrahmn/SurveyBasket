@@ -17,7 +17,7 @@ public static class ResultExtensions
             { "error", new { result.Error.Code , result.Error.Description } }
         };
 
-       
+
         return new ObjectResult(problemDetails);
     }
 }

@@ -1,6 +1,5 @@
 ﻿using MailKit.Net.Smtp;
 using MailKit.Security;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using MimeKit;
 using SurveyBasket.Settings;
 
@@ -12,12 +11,13 @@ public class EmailService(IOptions<MailSettings> options) : IEmailSender
 
     public async Task SendEmailAsync(string email, string subject, string htmlMessage)
     {
-        var massage = new MimeMessage { 
+        var massage = new MimeMessage
+        {
 
             Sender = MailboxAddress.Parse(options.Mail),
             Subject = subject,
 
-            };
+        };
         massage.To.Add(MailboxAddress.Parse(email));
 
         var builder = new BodyBuilder

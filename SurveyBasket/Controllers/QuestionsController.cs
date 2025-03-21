@@ -1,11 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SurveyBasket.Abstraction;
-using SurveyBasket.Abstraction.Consts;
-using SurveyBasket.Abstraction.Errors;
+﻿using SurveyBasket.Abstraction.Consts;
 using SurveyBasket.Authentication.Filters;
 using SurveyBasket.Contracts.Questions;
-using SurveyBasket.Services.Questions;
 
 namespace SurveyBasket.Controllers;
 [Route("polls/{PollId}/[controller]")]
@@ -26,7 +21,7 @@ public class QuestionsController(IQuestionService service) : ControllerBase
 
         if (result.IsSuccess)
             //return CreatedAtAction(nameof(Get), new {PollId,result.Value.Id,result.Value});
-           return Ok(result.Value);
+            return Ok(result.Value);
 
 
         return result.ToProblem();
@@ -37,12 +32,12 @@ public class QuestionsController(IQuestionService service) : ControllerBase
 
     [HttpGet("{Id}")]
     [HasPermission(Permissions.GetQuestions)]
-    public async Task<IActionResult> Get(int PollId,int Id)
+    public async Task<IActionResult> Get(int PollId, int Id)
     {
         var result = await service.GetAsync(PollId, Id);
 
-        if (result.IsSuccess) 
-        return Ok(result.Value);
+        if (result.IsSuccess)
+            return Ok(result.Value);
 
         return result.ToProblem();
     }
@@ -62,13 +57,13 @@ public class QuestionsController(IQuestionService service) : ControllerBase
 
         return result.ToProblem();
     }
-    
+
     [HttpPut("{Id}")]
     [HasPermission(Permissions.UpdateQuestions)]
-    public async Task<IActionResult> UpdateQuestion(int PollId, int Id ,QuestionRequest request)
+    public async Task<IActionResult> UpdateQuestion(int PollId, int Id, QuestionRequest request)
     {
 
-        var result = await service.UpdateAsync(PollId , Id , request);
+        var result = await service.UpdateAsync(PollId, Id, request);
 
         if (result.IsSuccess)
             return NoContent();

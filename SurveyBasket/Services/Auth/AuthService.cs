@@ -28,7 +28,7 @@ public class AuthService(
         if (await manager.FindByEmailAsync(request.Email) is not { } user)
             return Result.Failure<AuthResponse>(UserErrors.InvalidCredentials);
 
-        if(user.IsDisable)
+        if (user.IsDisable)
             return Result.Failure<AuthResponse>(UserErrors.Disableuser);
 
         //using user manager
@@ -46,14 +46,14 @@ public class AuthService(
         {
             var userRoles = await manager.GetRolesAsync(user);
             var UserPermissions = await dbcontext.Roles
-                .Join(dbcontext.RoleClaims , role=>role.Id,
-                claim=>claim.RoleId,
+                .Join(dbcontext.RoleClaims, role => role.Id,
+                claim => claim.RoleId,
                 (role, claim) => new { role, claim })
                 .Where(x => userRoles.Contains(x.role.Name!))
                 .Select(x => x.claim.ClaimType)
                 .Distinct()
                 .ToListAsync();
-            var (Token, ExpiresIn) = jwtProvider.GenerateToken(user,userRoles, UserPermissions!);
+            var (Token, ExpiresIn) = jwtProvider.GenerateToken(user, userRoles, UserPermissions!);
 
             var RefreshToken = GenerateRefreshToken();
 
@@ -87,7 +87,7 @@ public class AuthService(
              UserErrors.EmailNotConfirmed :
              result.IsLockedOut ?
              UserErrors.userLockedout :
-             UserErrors.InvalidCredentials; 
+             UserErrors.InvalidCredentials;
 
 
         return Result.Failure<AuthResponse>(error);
@@ -114,7 +114,7 @@ public class AuthService(
         if (user.IsDisable)
             return Result.Failure<AuthResponse>(UserErrors.Disableuser);
 
-        if(user.LockoutEnd > DateTime.UtcNow)
+        if (user.LockoutEnd > DateTime.UtcNow)
             return Result.Failure<AuthResponse>(UserErrors.userLockedout);
 
 
@@ -283,7 +283,7 @@ public class AuthService(
 
             });
 
-        BackgroundJob.Enqueue(()=> emailSender.SendEmailAsync(user.Email!, "Survay basket : Email configration", emailbody));
+        BackgroundJob.Enqueue(() => emailSender.SendEmailAsync(user.Email!, "Survay basket : Email configration", emailbody));
         await Task.CompletedTask;
     }
 
@@ -298,16 +298,16 @@ public class AuthService(
 
             });
 
-        BackgroundJob.Enqueue(()=> emailSender.SendEmailAsync(user.Email!, "Survay basket : change password", emailbody));
+        BackgroundJob.Enqueue(() => emailSender.SendEmailAsync(user.Email!, "Survay basket : change password", emailbody));
         await Task.CompletedTask;
     }
 
     public async Task<Result> ForgetPassordAsync(ForgetPasswordRequest request)
     {
-        if(await manager.FindByEmailAsync(request.Email) is not { } user)
+        if (await manager.FindByEmailAsync(request.Email) is not { } user)
             return Result.Success();
 
-        if(!user.EmailConfirmed)
+        if (!user.EmailConfirmed)
             return Result.Failure(UserErrors.EmailNotConfirmed);
 
         var code = await manager.GeneratePasswordResetTokenAsync(user);
@@ -327,7 +327,7 @@ public class AuthService(
     {
         var user = await manager.FindByEmailAsync(request.Email);
 
-        if(user == null || !user.EmailConfirmed) 
+        if (user == null || !user.EmailConfirmed)
             return Result.Failure(UserErrors.InvalidCredentials);
 
         IdentityResult identityResult;
@@ -336,7 +336,7 @@ public class AuthService(
         {
             var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(request.Code));
 
-            identityResult = await manager.ResetPasswordAsync(user,code , request.Password);
+            identityResult = await manager.ResetPasswordAsync(user, code, request.Password);
 
         }
         catch (FormatException)
@@ -345,7 +345,7 @@ public class AuthService(
             identityResult = IdentityResult.Failed(manager.ErrorDescriber.InvalidToken());
         }
 
-        if(identityResult.Succeeded)
+        if (identityResult.Succeeded)
             return Result.Success();
 
         var error = identityResult.Errors.First();

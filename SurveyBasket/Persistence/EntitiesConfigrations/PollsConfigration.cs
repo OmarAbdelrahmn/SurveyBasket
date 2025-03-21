@@ -1,7 +1,7 @@
 ﻿
 namespace SurveyBasket.Persistence.EntitiesConfigrations;
 
-public class PollsConfigration :IEntityTypeConfiguration<Poll>
+public class PollsConfigration : IEntityTypeConfiguration<Poll>
 {
     public void Configure(EntityTypeBuilder<Poll> builder)
     {
@@ -12,7 +12,7 @@ public class PollsConfigration :IEntityTypeConfiguration<Poll>
         builder.Property(p => p.Summary)
             .IsRequired()
             .HasMaxLength(500);
-        
+
     }
 }
 

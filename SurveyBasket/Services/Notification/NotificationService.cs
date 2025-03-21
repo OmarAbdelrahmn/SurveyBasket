@@ -1,15 +1,10 @@
-﻿
-using Microsoft.AspNetCore.Identity.UI.Services;
-using SurveyBasket.Helpers;
-using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
-
-namespace SurveyBasket.Services.Notification;
+﻿namespace SurveyBasket.Services.Notification;
 
 public class NotificationService(
-    ApplicationDbcontext dbcontext ,
+    ApplicationDbcontext dbcontext,
     UserManager<ApplicataionUser> manager,
-    IHttpContextAccessor httpContextAccessor ,
-    IEmailSender emailSender 
+    IHttpContextAccessor httpContextAccessor,
+    IEmailSender emailSender
     ) : INotificationService
 {
     private readonly ApplicationDbcontext dbcontext = dbcontext;
@@ -23,13 +18,13 @@ public class NotificationService(
 
         if (PollId.HasValue)
         {
-            var poll  = await dbcontext.Polls.SingleOrDefaultAsync(p => p.Id == PollId && p.IsPublished);
+            var poll = await dbcontext.Polls.SingleOrDefaultAsync(p => p.Id == PollId && p.IsPublished);
             polls = [poll!];
         }
         else
         {
             polls = await dbcontext.Polls
-                .Where(x=>x.IsPublished && x.StartsAt == DateOnly.FromDateTime(DateTime.UtcNow))
+                .Where(x => x.IsPublished && x.StartsAt == DateOnly.FromDateTime(DateTime.UtcNow))
                 .AsNoTracking()
                 .ToListAsync();
         }
@@ -51,8 +46,8 @@ public class NotificationService(
                     {"{{endDate}}", poll.EndsAt.ToString()},
                     {"{{url}}", $"{origin}/polls/start/{poll.Id}"}
                 };
-               var body = EmailBodyBuilder.GenerateEmailBody("PollNotification",placeholder);
-               await emailSender.SendEmailAsync(user.Email!, $"Survay Basket : New Poll {poll.Title}", body);
+                var body = EmailBodyBuilder.GenerateEmailBody("PollNotification", placeholder);
+                await emailSender.SendEmailAsync(user.Email!, $"Survay Basket : New Poll {poll.Title}", body);
             }
         }
     }

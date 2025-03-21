@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SurveyBasket.Contracts.Users;
+﻿using SurveyBasket.Contracts.Users;
 using SurveyBasket.Services.User;
 
 namespace SurveyBasket.Controllers;
@@ -12,7 +10,7 @@ public class AccountController(IUserService service) : ControllerBase
     private readonly IUserService service = service;
 
     [HttpGet("")]
-    public async Task<IActionResult> ShowUserProfile ()
+    public async Task<IActionResult> ShowUserProfile()
     {
         var result = await service.GetUserProfile(User.GetUserId()!);
 
@@ -20,9 +18,9 @@ public class AccountController(IUserService service) : ControllerBase
     }
 
     [HttpPut("info")]
-    public async Task<IActionResult> UpdateUserProfile([FromBody]UpdateUserProfileRequest request)
+    public async Task<IActionResult> UpdateUserProfile([FromBody] UpdateUserProfileRequest request)
     {
-        var result = await service.UpdateUserProfile(User.GetUserId()!,request);
+        var result = await service.UpdateUserProfile(User.GetUserId()!, request);
 
         return NoContent();
     }

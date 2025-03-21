@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SurveyBasket.Abstraction.Consts;
+﻿using SurveyBasket.Abstraction.Consts;
 using SurveyBasket.Authentication.Filters;
 using SurveyBasket.Services.AddResults;
 
@@ -13,12 +11,12 @@ public class ResultsController(IResultService service) : ControllerBase
     private readonly IResultService service = service;
 
     [HttpGet("row-data")]
-    
+
 
     public async Task<IActionResult> GetPollVotes(int PollId)
     {
         var result = await service.GetPollVotesAsynce(PollId);
-        
+
         return result.IsSuccess ? Ok(result.Value)
             : result.ToProblem();
     }

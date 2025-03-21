@@ -1,7 +1,7 @@
 ﻿
 namespace SurveyBasket.Persistence.EntitiesConfigrations;
 
-public class AnswerConfigration :IEntityTypeConfiguration<Answer>
+public class AnswerConfigration : IEntityTypeConfiguration<Answer>
 {
     public void Configure(EntityTypeBuilder<Answer> builder)
     {
@@ -11,7 +11,7 @@ public class AnswerConfigration :IEntityTypeConfiguration<Answer>
 
         builder.HasIndex(p => new { p.Id, p.Content })
             .IsUnique();
-           
+
     }
 }
 

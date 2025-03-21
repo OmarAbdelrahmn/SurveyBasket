@@ -1,9 +1,6 @@
-﻿
-using SurveyBasket.Contracts.Auth;
+﻿namespace SurveyBasket.Contracts.Auth;
 
-namespace SurveyBasket.Contracts.Auth;
-
-public class ConfigrationEmailValidator :  AbstractValidator<ConfigrationEmailRequest>
+public class ConfigrationEmailValidator : AbstractValidator<ConfigrationEmailRequest>
 {
 
     public ConfigrationEmailValidator()
@@ -13,5 +10,6 @@ public class ConfigrationEmailValidator :  AbstractValidator<ConfigrationEmailRe
 
         RuleFor(x => x.Code)
             .NotEmpty();
-    }}
+    }
+}
 

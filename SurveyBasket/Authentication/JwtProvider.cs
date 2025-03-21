@@ -8,7 +8,7 @@ public class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
 {
     private readonly JwtOptions options = options.Value;
 
-    public (string Token, int Expiry) GenerateToken(ApplicataionUser user , IEnumerable<string> Roles , IEnumerable<string> Permission )
+    public (string Token, int Expiry) GenerateToken(ApplicataionUser user, IEnumerable<string> Roles, IEnumerable<string> Permission)
     {
         Claim[] claims = [
             new (JwtRegisteredClaimNames.Sub, user.Id),
@@ -33,7 +33,7 @@ public class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
             signingCredentials: signingCredentials
         );
 
-        return (Token : new JwtSecurityTokenHandler().WriteToken(token), Expiry: options.ExpiryIn);
+        return (Token: new JwtSecurityTokenHandler().WriteToken(token), Expiry: options.ExpiryIn);
     }
 
     public string? ValidateToken(string token)
@@ -57,7 +57,7 @@ public class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
 
             return jwtToken.Claims.First(claim => claim.Type == JwtRegisteredClaimNames.Sub).Value;
         }
-        catch 
+        catch
         {
             return null;
 

@@ -2,11 +2,11 @@
 
 namespace SurveyBasket.Contracts.Auth;
 
-public class RegisterRequestValidator :  AbstractValidator<RegisterRequest>
+public class RegisterRequestValidator : AbstractValidator<RegisterRequest>
 {
 
     public RegisterRequestValidator()
-{
+    {
         RuleFor(x => x.Email)
             .NotEmpty()
             .WithMessage("Email is required")
@@ -27,6 +27,7 @@ public class RegisterRequestValidator :  AbstractValidator<RegisterRequest>
         RuleFor(x => x.LastName)
             .NotEmpty()
             .WithMessage("LastName is required")
-            .Length(3, 100); 
-    } }
+            .Length(3, 100);
+    }
+}
 

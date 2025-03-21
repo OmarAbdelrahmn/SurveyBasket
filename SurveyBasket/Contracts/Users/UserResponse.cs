@@ -8,5 +8,5 @@ public record UserResponse
     string Email,
     bool IsDisable,
     IEnumerable<string> Roles
-    
+
     );

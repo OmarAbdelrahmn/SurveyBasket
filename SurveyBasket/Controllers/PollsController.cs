@@ -13,7 +13,7 @@ public class PollsController(IPollsService service) : ControllerBase
 
     [HttpGet("")]
     [HasPermission(Permissions.GetPolls)]
-    
+
     public async Task<IActionResult> GetAll()
     {
         var response = await service.GetPollsAsync();
@@ -56,24 +56,24 @@ public class PollsController(IPollsService service) : ControllerBase
     [HasPermission(Permissions.AddPolls)]
 
     public async Task<IActionResult> add(PollRequest request)
-    {   
+    {
         var response = await service.CreatePollAsync(request);
 
         return response.IsSuccess ?
             Ok(response.Value) :
             response.ToProblem();
-        
+
     }
 
-    
+
 
     [HttpPut("{Id}")]
     [HasPermission(Permissions.UpdatePolls)]
 
-    public async Task<IActionResult> update(int Id , PollRequest request)
+    public async Task<IActionResult> update(int Id, PollRequest request)
     {
 
-        var response =await service.UpdatePollAsync(Id, request);
+        var response = await service.UpdatePollAsync(Id, request);
 
         return response.IsSuccess ? Ok(response.Value) :
             response.ToProblem();
@@ -85,9 +85,9 @@ public class PollsController(IPollsService service) : ControllerBase
     [HttpDelete("{Id}")]
     [HasPermission(Permissions.DeletePolls)]
 
-    public IActionResult delete(int Id,CancellationToken cancellationToken)
+    public IActionResult delete(int Id, CancellationToken cancellationToken)
     {
-        var response = service.DeletePollAsync(Id,cancellationToken);
+        var response = service.DeletePollAsync(Id, cancellationToken);
 
         return Ok(response);
     }

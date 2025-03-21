@@ -8,6 +8,6 @@ public class AuditableEntity
     public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow;
 
     public ApplicataionUser User { get; set; } = default!;
-    public ApplicataionUser? UpdatedUser { get; set; } 
+    public ApplicataionUser? UpdatedUser { get; set; }
 
 }

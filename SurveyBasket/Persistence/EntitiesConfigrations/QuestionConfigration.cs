@@ -1,7 +1,7 @@
 ﻿
 namespace SurveyBasket.Persistence.EntitiesConfigrations;
 
-public class QuestionConfigration :IEntityTypeConfiguration<Question>
+public class QuestionConfigration : IEntityTypeConfiguration<Question>
 {
     public void Configure(EntityTypeBuilder<Question> builder)
     {
@@ -9,7 +9,7 @@ public class QuestionConfigration :IEntityTypeConfiguration<Question>
             .IsRequired()
             .HasMaxLength(1000);
 
-        builder.HasIndex(p => new {p.PollsId , p.Content})
+        builder.HasIndex(p => new { p.PollsId, p.Content })
             .IsUnique();
     }
 }

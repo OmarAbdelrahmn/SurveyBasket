@@ -3,7 +3,7 @@ using SurveyBasket.Abstraction.Consts;
 
 namespace SurveyBasket.Persistence.EntitiesConfigrations;
 
-public class UserConfigration :IEntityTypeConfiguration<ApplicataionUser>
+public class UserConfigration : IEntityTypeConfiguration<ApplicataionUser>
 {
     public void Configure(EntityTypeBuilder<ApplicataionUser> builder)
     {
@@ -36,7 +36,7 @@ public class UserConfigration :IEntityTypeConfiguration<ApplicataionUser>
             FirstName = "Survay Basket",
             LastName = "Admin"
         });
-        
+
     }
 }
 

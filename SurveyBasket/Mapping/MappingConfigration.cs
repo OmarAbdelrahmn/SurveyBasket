@@ -12,12 +12,12 @@ public class MappingConfigration : IRegister
 
         //config.NewConfig<RegisterRequest, ApplicataionUser>()
         //    .Map(des => des.UserName, src => $"{src.FirstName}{src.LastName}");
-        
-        
+
+
         config.NewConfig<RegisterRequest, ApplicataionUser>()
             .Map(des => des.UserName, src => src.Email);
-        
-        config.NewConfig<(ApplicataionUser user , IList<string> userroles), UserResponse>()
+
+        config.NewConfig<(ApplicataionUser user, IList<string> userroles), UserResponse>()
             .Map(des => des, src => src.user)
             .Map(des => des.Roles, src => src.userroles);
     }

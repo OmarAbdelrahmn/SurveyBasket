@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace SurveyBasket.Persistence;
 
-public class ApplicationDbcontext(DbContextOptions<ApplicationDbcontext> options , IHttpContextAccessor httpContextAccessor) : IdentityDbContext<ApplicataionUser, ApplicationRole , string>(options)
+public class ApplicationDbcontext(DbContextOptions<ApplicationDbcontext> options, IHttpContextAccessor httpContextAccessor) : IdentityDbContext<ApplicataionUser, ApplicationRole, string>(options)
 {
     private readonly IHttpContextAccessor httpContextAccessor = httpContextAccessor;
 
     public required DbSet<Poll> Polls { get; set; }
     public required DbSet<Question> Questions { get; set; }
-    public required DbSet<Answer> Answers{ get; set; }
+    public required DbSet<Answer> Answers { get; set; }
     public required DbSet<Vote> Votes { get; set; }
-    public required DbSet<VoteAnswer> VoteAnswers{ get; set; }
+    public required DbSet<VoteAnswer> VoteAnswers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -24,9 +24,9 @@ public class ApplicationDbcontext(DbContextOptions<ApplicationDbcontext> options
 
         foreach (var fk in cascadeFKs)
             fk.DeleteBehavior = DeleteBehavior.Restrict;
-        
 
-            base.OnModelCreating(modelBuilder);
+
+        base.OnModelCreating(modelBuilder);
 
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
