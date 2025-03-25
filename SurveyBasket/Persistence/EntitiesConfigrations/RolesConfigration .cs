@@ -14,7 +14,7 @@ public class RolesConfigration : IEntityTypeConfiguration<ApplicationRole>
                 {
                     Id = DefaultRoles.AdminRoleId,
                     Name = DefaultRoles.Admin,
-                    ConcurrencyStamp = Guid.NewGuid().ToString(),
+                    ConcurrencyStamp = DefaultRoles.AdminRoleConcurrencyStamp,
                     NormalizedName = DefaultRoles.Admin.ToUpper(),
                     IsDefault = false,
                     IsDeleted = false
@@ -23,7 +23,7 @@ public class RolesConfigration : IEntityTypeConfiguration<ApplicationRole>
                 {
                     Id = DefaultRoles.MemberRoleId,
                     Name = DefaultRoles.Member,
-                    ConcurrencyStamp = Guid.NewGuid().ToString(),
+                    ConcurrencyStamp = DefaultRoles.MemberRoleConcurrencyStamp,
                     NormalizedName = DefaultRoles.Member.ToUpper(),
                     IsDefault = true,
                     IsDeleted = false
