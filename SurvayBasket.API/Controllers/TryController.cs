@@ -1,0 +1,18 @@
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace SurvayBasket.API.Controllers;
+[Route("api/[controller]")]
+[ApiController]
+public class TryController(IConfiguration configuration) : ControllerBase
+{
+    private readonly IConfiguration configuration = configuration;
+
+    [HttpGet("")]
+    public async Task<IActionResult> TryAsync()
+    {
+        var connection = configuration.GetConnectionString("DefaultConnection");
+
+        return Ok(connection);
+    }
+}
