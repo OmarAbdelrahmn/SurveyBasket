@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.AspNet.Identity.EntityFramework;
+
 namespace SurvayBasket.Domain.Entities;
 
 public sealed class ApplicataionUser : IdentityUser

@@ -1,4 +1,6 @@
-﻿namespace SurvayBasket.Domain.Entities;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+
+namespace SurvayBasket.Domain.Entities;
 
 public class ApplicationRole : IdentityRole
 {

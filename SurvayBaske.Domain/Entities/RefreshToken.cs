@@ -1,4 +1,6 @@
-﻿namespace SurvayBasket.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace SurvayBasket.Domain.Entities;
 
 [Owned]
 public class RefreshToken
