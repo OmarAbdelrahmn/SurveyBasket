@@ -1,10 +1,14 @@
-﻿using SurveyBasket.Contracts.Results;
+﻿using SurvayBasket.Application.Abstraction;
+using SurvayBasket.Application.Abstraction.Errors;
+using SurvayBasket.Application.Contracts.Results;
+using SurvayBasket.Application.Services.AddResults;
+using SurvayBasket.Infrastructure.Dbcontext;
 
 namespace SurvayBasket.Infrastructure.Services.AddResults;
 
-public class ResultService(ApplicationDbcontext dbcontext) : IResultService
+public class ResultService(AppDbcontext dbcontext) : IResultService
 {
-    private readonly ApplicationDbcontext dbcontext = dbcontext;
+    private readonly AppDbcontext dbcontext = dbcontext;
 
     public async Task<Result<PollVotesResponse>> GetPollVotesAsynce(int pollId)
     {

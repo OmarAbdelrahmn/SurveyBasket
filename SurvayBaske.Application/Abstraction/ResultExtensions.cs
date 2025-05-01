@@ -1,4 +1,8 @@
-﻿namespace SurvayBasket.Application.Abstraction;
+﻿using Microsoft.AspNetCore.Mvc;
+
+using Microsoft.AspNetCore.Http;
+
+namespace SurvayBasket.Application.Abstraction;
 
 public static class ResultExtensions
 {
@@ -8,7 +12,7 @@ public static class ResultExtensions
             throw new InvalidOperationException("Cannot convert a successful result to a problem.");
 
 
-        var problem = Results.Problem(statusCode: result.Error.StatuesCode);
+        var problem = Microsoft.AspNetCore.Http.Results.Problem(statusCode: result.Error.StatuesCode);
 
         var problemDetails = problem.GetType().GetProperty("ProblemDetails")!.GetValue(problem) as ProblemDetails;
 

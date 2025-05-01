@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SurvayBaske.Infrastructure.Dbcontext;
 using Microsoft.EntityFrameworkCore;
+using SurvayBasket.Infrastructure.Dbcontext;
 
 namespace SurvayBasket.Infrastructure;
 public static class InfraDependencies

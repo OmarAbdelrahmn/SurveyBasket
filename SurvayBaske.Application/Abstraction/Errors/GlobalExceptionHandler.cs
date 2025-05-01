@@ -1,4 +1,8 @@
 ﻿
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.Extensions.Logging;
+
 namespace SurvayBasket.Application.Abstraction.Errors;
 
 public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IExceptionHandler
