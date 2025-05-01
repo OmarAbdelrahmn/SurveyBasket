@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using SurveyBasket.Contracts.Roles;
 
 namespace SurvayBasket.Application.Contracts.Roles;
 

@@ -115,37 +115,38 @@ public class RoleService(RoleManager<ApplicationRole> roleManager, AppDbcontext 
         var result = await roleManager.UpdateAsync(role);
 
         if (result.Succeeded)
-        {
-            var Currentpermissions = await dbcontext.RoleClaims
-                .Where(c => c.RoleId == Id && c.ClaimType == Permissions.Type)
-                .Select(c => c.ClaimValue)
-                .ToListAsync();
+            return Result.Success();
+        //{
+        //    var Currentpermissions = await dbcontext.RoleClaims
+        //        .Where(c => c.RoleId == Id && c.ClaimType == Permissions.Type)
+        //        .Select(c => c.ClaimValue)
+        //        .ToListAsync();
 
-            var newPermissions = request.Permissions
-                .Except(Currentpermissions)
-                .Select(x => new IdentityRoleClaim<string>
-                {
-                    ClaimType = Permissions.Type,
-                    ClaimValue = x,
-                    RoleId = role.Id
-                });
+            //var newPermissions = request.Permissions
+            //    .Except(Currentpermissions)
+            //    .Select(x => new IdentityRoleClaim<string>
+            //    {
+            //        ClaimType = Permissions.Type,
+            //        ClaimValue = x,
+            //        RoleId = role.Id
+            //    });
 
-            var removedPermissions = Currentpermissions.Except(request.Permissions);
+            //var removedPermissions = Currentpermissions.Except(request.Permissions);
 
-            await dbcontext.RoleClaims
-                .Where(c => c.RoleId == Id && removedPermissions.Contains(c.ClaimValue))
-                .ExecuteDeleteAsync();
+            //await dbcontext.RoleClaims
+            //    .Where(c => c.RoleId == Id && removedPermissions.Contains(c.ClaimValue))
+            //    .ExecuteDeleteAsync();
 
-            await dbcontext.AddRangeAsync(newPermissions);
-            await dbcontext.SaveChangesAsync();
+            //await dbcontext.AddRangeAsync(newPermissions);
+            //await dbcontext.SaveChangesAsync();
 
             return Result.Success();
 
         }
 
-        var error = result.Errors.First();
-        return Result.Failure(new Error(error.Code, error.Description, StatusCodes.Status400BadRequest));
+        //var error = result.Errors.First();
+        //return Result.Failure(new Error(error.Code, error.Description, StatusCodes.Status400BadRequest));
 
 
     }
-}
+//}

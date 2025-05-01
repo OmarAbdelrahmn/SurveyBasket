@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Hangfire;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using SurvayBasket.Application.Abstraction;
 using SurvayBasket.Application.Abstraction.Errors;
 using SurvayBasket.Application.Contracts.Auth;
 using SurvayBasket.Application.Services.Auth;
 using SurvayBasket.Domain.Consts;
+using SurvayBasket.Infrastructure.Authentication;
 using SurvayBasket.Infrastructure.Dbcontext;
+using SurvayBasket.Infrastructure.Helpers;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -29,147 +33,147 @@ public class AuthService(
     private readonly AppDbcontext dbcontext = dbcontext;
     private readonly int RefreshTokenExpiryDays = 60;
 
-    public async Task<Result<AuthResponse>> SingInAsync(AuthRequest request)
-    {
+    //public async Task<Result<AuthResponse>> SingInAsync(AuthRequest request)
+    //{
 
-        if (await manager.FindByEmailAsync(request.Email) is not { } user)
-            return Result.Failure<AuthResponse>(UserErrors.InvalidCredentials);
+    //    if (await manager.FindByEmailAsync(request.Email) is not { } user)
+    //        return Result.Failure<AuthResponse>(UserErrors.InvalidCredentials);
 
-        if (user.IsDisable)
-            return Result.Failure<AuthResponse>(UserErrors.Disableuser);
+    //    if (user.IsDisable)
+    //        return Result.Failure<AuthResponse>(UserErrors.Disableuser);
 
-        //using user manager
-        //var TruePassword = await manager.CheckPasswordAsync(user, request.Password);
+    //    //using user manager
+    //    //var TruePassword = await manager.CheckPasswordAsync(user, request.Password);
 
-        //if (!TruePassword)
-        //    return Result.Failure<AuthResponse>(UserErrors.InvalidCredentials);
-
-
-
-        //using signin manager
-        var result = await signInManager.PasswordSignInAsync(user, request.Password, false, true);
-
-        if (result.Succeeded)
-        {
-            var userRoles = await manager.GetRolesAsync(user);
-            var UserPermissions = await dbcontext.Roles
-                .Join(dbcontext.RoleClaims, role => role.Id,
-                claim => claim.RoleId,
-                (role, claim) => new { role, claim })
-                .Where(x => userRoles.Contains(x.role.Name!))
-                .Select(x => x.claim.ClaimType)
-                .Distinct()
-                .ToListAsync();
-            var (Token, ExpiresIn) = jwtProvider.GenerateToken(user, userRoles, UserPermissions!);
-
-            var RefreshToken = GenerateRefreshToken();
-
-            var RefreshExpiresIn = DateTime.UtcNow.AddDays(RefreshTokenExpiryDays);
+    //    //if (!TruePassword)
+    //    //    return Result.Failure<AuthResponse>(UserErrors.InvalidCredentials);
 
 
-            user.RefreshTokens.Add(new RefreshToken
-            {
-                Token = RefreshToken,
-                ExpiresOn = RefreshExpiresIn,
 
-            });
+    //    //using signin manager
+    //    var result = await signInManager.PasswordSignInAsync(user, request.Password, false, true);
 
-            await manager.UpdateAsync(user);
+    //    if (result.Succeeded)
+    //    {
+    //        var userRoles = await manager.GetRolesAsync(user);
+    //        var UserPermissions = await dbcontext.Roles
+    //            .Join(dbcontext.RoleClaims, role => role.Id,
+    //            claim => claim.RoleId,
+    //            (role, claim) => new { role, claim })
+    //            .Where(x => userRoles.Contains(x.role.Name!))
+    //            .Select(x => x.claim.ClaimType)
+    //            .Distinct()
+    //            .ToListAsync();
+    //        var (Token, ExpiresIn) = jwtProvider.GenerateToken(user, userRoles, UserPermissions!);
 
-            var response = new AuthResponse(
-                user.Id,
-                user.Email!,
-                user.FirstName,
-                user.LastName,
-                Token,
-                ExpiresIn * 60,
-                RefreshToken,
-                RefreshExpiresIn
-            );
+    //        var RefreshToken = GenerateRefreshToken();
 
-            return Result.Success(response);
-        }
-
-        var error = result.IsNotAllowed ?
-             UserErrors.EmailNotConfirmed :
-             result.IsLockedOut ?
-             UserErrors.userLockedout :
-             UserErrors.InvalidCredentials;
+    //        var RefreshExpiresIn = DateTime.UtcNow.AddDays(RefreshTokenExpiryDays);
 
 
-        return Result.Failure<AuthResponse>(error);
+    //        user.RefreshTokens.Add(new RefreshToken
+    //        {
+    //            Token = RefreshToken,
+    //            ExpiresOn = RefreshExpiresIn,
 
-    }
+    //        });
+
+    //        await manager.UpdateAsync(user);
+
+    //        var response = new AuthResponse(
+    //            user.Id,
+    //            user.Email!,
+    //            user.FirstName,
+    //            user.LastName,
+    //            Token,
+    //            ExpiresIn * 60,
+    //            RefreshToken,
+    //            RefreshExpiresIn
+    //        );
+
+    //        return Result.Success(response);
+    //    }
+
+    //    var error = result.IsNotAllowed ?
+    //         UserErrors.EmailNotConfirmed :
+    //         result.IsLockedOut ?
+    //         UserErrors.userLockedout :
+    //         UserErrors.InvalidCredentials;
+
+
+    //    return Result.Failure<AuthResponse>(error);
+
+    //}
 
     private static string GenerateRefreshToken()
     {
         return Convert.ToBase64String(RandomNumberGenerator.GetBytes(220));
     }
 
-    public async Task<Result<AuthResponse>> GetRefreshTokenAsync(string Token, string RefreshToken)
-    {
-        var UserId = jwtProvider.ValidateToken(Token);
+    //public async Task<Result<AuthResponse>> GetRefreshTokenAsync(string Token, string RefreshToken)
+    //{
+    //    var UserId = jwtProvider.ValidateToken(Token);
 
-        if (UserId is null)
-            return Result.Failure<AuthResponse>(UserErrors.InvalidCredentials);
+    //    if (UserId is null)
+    //        return Result.Failure<AuthResponse>(UserErrors.InvalidCredentials);
 
-        var user = await manager.FindByIdAsync(UserId);
+    //    var user = await manager.FindByIdAsync(UserId);
 
-        if (user is null)
-            return Result.Failure<AuthResponse>(UserErrors.InvalidCredentials);
+    //    if (user is null)
+    //        return Result.Failure<AuthResponse>(UserErrors.InvalidCredentials);
 
-        if (user.IsDisable)
-            return Result.Failure<AuthResponse>(UserErrors.Disableuser);
+    //    if (user.IsDisable)
+    //        return Result.Failure<AuthResponse>(UserErrors.Disableuser);
 
-        if (user.LockoutEnd > DateTime.UtcNow)
-            return Result.Failure<AuthResponse>(UserErrors.userLockedout);
-
-
-        var UserRefreshToken = user.RefreshTokens.SingleOrDefault(x => x.Token == RefreshToken && x.IsActive);
-
-        if (UserRefreshToken is null)
-            return Result.Failure<AuthResponse>(UserErrors.InvalidCredentials);
-
-        UserRefreshToken.RevokedOn = DateTime.UtcNow;
-
-        var userRoles = await manager.GetRolesAsync(user);
-        var UserPermissions = await dbcontext.Roles
-            .Join(dbcontext.RoleClaims, role => role.Id,
-            claim => claim.RoleId,
-            (role, claim) => new { role, claim })
-            .Where(x => userRoles.Contains(x.role.Name!))
-            .Select(x => x.claim.ClaimType)
-            .Distinct()
-            .ToListAsync();
-        var (newToken, ExpiresIn) = jwtProvider.GenerateToken(user, userRoles, UserPermissions!);
-
-        var newRefreshToken = GenerateRefreshToken();
-
-        var RefreshExpiresIn = DateTime.UtcNow.AddDays(RefreshTokenExpiryDays);
+    //    if (user.LockoutEnd > DateTime.UtcNow)
+    //        return Result.Failure<AuthResponse>(UserErrors.userLockedout);
 
 
-        user.RefreshTokens.Add(new RefreshToken
-        {
-            Token = newRefreshToken,
-            ExpiresOn = RefreshExpiresIn,
+    //    var UserRefreshToken = user.RefreshTokens.SingleOrDefault(x => x.Token == RefreshToken && x.IsActive);
 
-        });
+    //    if (UserRefreshToken is null)
+    //        return Result.Failure<AuthResponse>(UserErrors.InvalidCredentials);
 
-        await manager.UpdateAsync(user);
+    //    UserRefreshToken.RevokedOn = DateTime.UtcNow;
 
-        var response = new AuthResponse(
-            user.Id,
-            user.Email!,
-            user.FirstName,
-            user.LastName,
-            newToken,
-            ExpiresIn * 60,
-            newRefreshToken,
-            RefreshExpiresIn
-        );
+    //    var userRoles = await manager.GetRolesAsync(user);
+    //    var UserPermissions = await dbcontext.Roles
+    //        .Join(dbcontext.RoleClaims, role => role.Id,
+    //        claim => claim.RoleId,
+    //        (role, claim) => new { role, claim })
+    //        .Where(x => userRoles.Contains(x.role.Name!))
+    //        .Select(x => x.claim.ClaimType)
+    //        .Distinct()
+    //        .ToListAsync();
+    //    var (newToken, ExpiresIn) = jwtProvider.GenerateToken(user, userRoles, UserPermissions!);
 
-        return Result.Success(response);
-    }
+    //    var newRefreshToken = GenerateRefreshToken();
+
+    //    var RefreshExpiresIn = DateTime.UtcNow.AddDays(RefreshTokenExpiryDays);
+
+
+    //    user.RefreshTokens.Add(new RefreshToken
+    //    {
+    //        Token = newRefreshToken,
+    //        ExpiresOn = RefreshExpiresIn,
+
+    //    });
+
+    //    await manager.UpdateAsync(user);
+
+    //    var response = new AuthResponse(
+    //        user.Id,
+    //        user.Email!,
+    //        user.FirstName,
+    //        user.LastName,
+    //        newToken,
+    //        ExpiresIn * 60,
+    //        newRefreshToken,
+    //        RefreshExpiresIn
+    //    );
+
+    //    return Result.Success(response);
+    //}
 
     public async Task<Result> RevokeRefreshTokenAsync(string Token, string RefreshToken)
     {

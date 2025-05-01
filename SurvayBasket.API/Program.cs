@@ -24,10 +24,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseExceptionHandler();   //  Handle exceptions
 
-app.UseAuthorization();
+app.UseCors();     //  Allow all CORS requests
+app.UseRouting();            //  Ensure routing happens before auth
+app.UseAuthentication();     //  Authentication middleware
+app.UseAuthorization();      //  Authorization middleware
+app.MapControllers();        //  Map the controller endpoints
 
-app.MapControllers();
 
 app.Run();

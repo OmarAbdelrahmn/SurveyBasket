@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using SurveyBasket.Contracts.Auth;
+//using SurveyBasket.Contracts.Auth;
 
 namespace SurvayBasket.Application.Contracts.Auth;
 
