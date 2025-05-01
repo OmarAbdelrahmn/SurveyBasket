@@ -1,6 +1,7 @@
-﻿using SurvayBasket.Application.Contracts.Votes;
+﻿using SurvayBasket.Application.Abstraction;
+using SurvayBasket.Application.Contracts.Votes;
 
-namespace SurveyBasket.Services.Votes;
+namespace SurvayBasket.Application.Services.Votes;
 
 public interface IVotesService
 {

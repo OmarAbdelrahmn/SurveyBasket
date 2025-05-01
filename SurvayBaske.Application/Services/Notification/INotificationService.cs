@@ -1,4 +1,4 @@
-﻿namespace SurveyBasket.Services.Notification;
+﻿namespace SurvayBasket.Application.Services.Notification;
 
 public interface INotificationService
 {

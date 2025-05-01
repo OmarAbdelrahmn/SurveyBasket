@@ -1,8 +1,8 @@
 ﻿using SurvayBasket.Application.Abstraction;
 using SurvayBasket.Application.Abstraction.Errors;
 using SurvayBasket.Application.Contracts.Votes;
+using SurvayBasket.Application.Services.Votes;
 using SurvayBasket.Infrastructure.Dbcontext;
-using SurveyBasket.Services.Votes;
 
 namespace SurvayBasket.Infrastructure.Services.Votes;
 

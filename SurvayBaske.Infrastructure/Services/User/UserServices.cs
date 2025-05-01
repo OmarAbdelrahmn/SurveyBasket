@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using SurvayBasket.Application.Abstraction;
 using SurvayBasket.Application.Contracts.Users;
-using SurveyBasket.Services.User;
+using SurvayBasket.Application.Services.User;
 
 namespace SurvayBasket.Infrastructure.Services.User;
 

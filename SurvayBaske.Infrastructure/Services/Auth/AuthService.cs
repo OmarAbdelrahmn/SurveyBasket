@@ -1,4 +1,13 @@
-﻿using SurveyBasket.Abstraction.Consts;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using SurvayBasket.Application.Abstraction;
+using SurvayBasket.Application.Abstraction.Errors;
+using SurvayBasket.Application.Contracts.Auth;
+using SurvayBasket.Application.Services.Auth;
+using SurvayBasket.Domain.Consts;
+using SurvayBasket.Infrastructure.Dbcontext;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace SurvayBasket.Infrastructure.Services.Auth;
 
@@ -9,7 +18,7 @@ public class AuthService(
     ILogger<AuthService> logger,
     IEmailSender emailSender,
     IHttpContextAccessor httpContextAccessor,
-    ApplicationDbcontext dbcontext) : IAuthService
+    AppDbcontext dbcontext) : IAuthService
 {
     private readonly UserManager<ApplicataionUser> manager = manager;
     private readonly SignInManager<ApplicataionUser> signInManager = signInManager;
@@ -17,7 +26,7 @@ public class AuthService(
     private readonly ILogger<AuthService> logger = logger;
     private readonly IEmailSender emailSender = emailSender;
     private readonly IHttpContextAccessor httpContextAccessor = httpContextAccessor;
-    private readonly ApplicationDbcontext dbcontext = dbcontext;
+    private readonly AppDbcontext dbcontext = dbcontext;
     private readonly int RefreshTokenExpiryDays = 60;
 
     public async Task<Result<AuthResponse>> SingInAsync(AuthRequest request)

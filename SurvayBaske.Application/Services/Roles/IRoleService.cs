@@ -1,6 +1,7 @@
-﻿using SurveyBasket.Contracts.Roles;
+﻿using SurvayBasket.Application.Abstraction;
+using SurvayBasket.Application.Contracts.Roles;
 
-namespace SurveyBasket.Services.Roles;
+namespace SurvayBasket.Application.Services.Roles;
 
 public interface IRoleService
 {

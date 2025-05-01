@@ -1,4 +1,7 @@
-﻿namespace SurveyBasket.Services.Polls;
+﻿using SurvayBasket.Application.Abstraction;
+using SurvayBasket.Application.Contracts.Polls;
+
+namespace SurvayBasket.Application.Services.Polls;
 
 public interface IPollsService
 {

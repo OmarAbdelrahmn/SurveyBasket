@@ -1,7 +1,7 @@
-﻿using SurvayBasket.Application.Contracts.Users;
-using SurveyBasket.Contracts.Users;
+﻿using SurvayBasket.Application.Abstraction;
+using SurvayBasket.Application.Contracts.Users;
 
-namespace SurveyBasket.Services.Admin;
+namespace SurvayBasket.Application.Services.Admin;
 
 public interface IAdminService
 {

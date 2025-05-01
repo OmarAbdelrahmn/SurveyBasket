@@ -3,7 +3,7 @@ using System.Reflection;
 
 
 namespace SurvayBasket.Infrastructure.Dbcontext;
-internal class AppDbcontext(DbContextOptions<AppDbcontext> options) : DbContext(options)
+public class AppDbcontext(DbContextOptions<AppDbcontext> options) : DbContext(options)
 {
     public required DbSet<Poll> Polls { get; set; }
     public required DbSet<Question> Questions { get; set; }

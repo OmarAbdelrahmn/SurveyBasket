@@ -1,16 +1,21 @@
-﻿using SurvayBasket.Application.Contracts.Users;
-using SurveyBasket.Contracts.Users;
-using SurveyBasket.Services.Roles;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using SurvayBasket.Application.Abstraction;
+using SurvayBasket.Application.Abstraction.Errors;
+using SurvayBasket.Application.Contracts.Users;
+using SurvayBasket.Application.Services.Admin;
+using SurvayBasket.Application.Services.Roles;
+using SurvayBasket.Infrastructure.Dbcontext;
 
 namespace SurvayBasket.Infrastructure.Services.Admin;
 
 public class AdminService(
      UserManager<ApplicataionUser> manager
-    , ApplicationDbcontext dbcontext
+    , AppDbcontext dbcontext
     , IRoleService roleService) : IAdminService
 {
     private readonly UserManager<ApplicataionUser> manager = manager;
-    private readonly ApplicationDbcontext dbcontext = dbcontext;
+    private readonly AppDbcontext dbcontext = dbcontext;
     private readonly IRoleService roleService = roleService;
 
     public async Task<Result<UserResponse>> AddUserAsync(CreateUserRequest request)

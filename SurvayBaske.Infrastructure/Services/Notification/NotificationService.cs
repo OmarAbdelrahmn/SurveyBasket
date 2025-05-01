@@ -1,13 +1,17 @@
-﻿namespace SurvayBasket.Infrastructure.Services.Notification;
+﻿using Microsoft.AspNetCore.Identity;
+using SurvayBasket.Application.Services.Notification;
+using SurvayBasket.Infrastructure.Dbcontext;
+
+namespace SurvayBasket.Infrastructure.Services.Notification;
 
 public class NotificationService(
-    ApplicationDbcontext dbcontext,
+    AppDbcontext dbcontext,
     UserManager<ApplicataionUser> manager,
     IHttpContextAccessor httpContextAccessor,
     IEmailSender emailSender
     ) : INotificationService
 {
-    private readonly ApplicationDbcontext dbcontext = dbcontext;
+    private readonly AppDbcontext dbcontext = dbcontext;
     private readonly UserManager<ApplicataionUser> manager = manager;
     private readonly IHttpContextAccessor httpContextAccessor = httpContextAccessor;
     private readonly IEmailSender emailSender = emailSender;

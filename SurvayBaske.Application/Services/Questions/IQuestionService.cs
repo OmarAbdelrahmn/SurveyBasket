@@ -1,6 +1,7 @@
-﻿using SurvayBasket.Application.Contracts.Questions;
+﻿using SurvayBasket.Application.Abstraction;
+using SurvayBasket.Application.Contracts.Questions;
 
-namespace SurveyBasket.Services.Questions;
+namespace SurvayBasket.Application.Services.Questions;
 
 public interface IQuestionService
 {
