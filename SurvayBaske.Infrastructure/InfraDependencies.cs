@@ -25,6 +25,9 @@ using SurvayBasket.Infrastructure.Services.AddResults;
 using SurvayBasket.Infrastructure.Services.Notification;
 using SurvayBasket.Infrastructure.Services.User;
 using SurvayBasket.Application.Abstraction.Errors;
+//using Microsoft.OpenApi.Models;
+
+using Microsoft.AspNetCore.Diagnostics;
 
 namespace SurvayBasket.Infrastructure;
 public static class InfraDependencies
@@ -49,15 +52,14 @@ public static class InfraDependencies
         Services.AddScoped<IAuthService, AuthService>();
         Services.AddScoped<IJwtProvider, JwtProvider>();
 
-        //Services.AddExceptionHandler<GlobalExceptionHandler>();
-
+        
         Services.AddProblemDetails();
 
 
 
         Services.AddAuth(configuration)
                 .AddMappester()
-                //.AddFluentValidation()
+                .AddFluentValidation()
                 //.AddSwagger()
                 .AddDatabase(configuration)
                 .AddCORS()
@@ -67,22 +69,15 @@ public static class InfraDependencies
 
         return Services;
     }
-    //public static IServiceCollection AddSwagger(this IServiceCollection Services)
-    //{
-    //    Services.AddSwaggerGen(c =>
-    //    {
-    //        c.SwaggerDoc("v1", new() { Title = "SurveyBasket", Version = "v1" });
-    //    });
-    //    return Services;
-    ////}
-    //public static IServiceCollection AddFluentValidation(this IServiceCollection Services)
-    //{
-    //    Services
-    //        .AddFluentValidationAutoValidation()
-    //        .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
-    //    return Services;
-    //}
+    public static IServiceCollection AddFluentValidation(this IServiceCollection Services)
+    {
+        Services
+            //.AddFluentValidationAutoValidation()
+            .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+        return Services;
+    }
     public static IServiceCollection AddMappester(this IServiceCollection Services)
     {
         var mappingConfig = TypeAdapterConfig.GlobalSettings;

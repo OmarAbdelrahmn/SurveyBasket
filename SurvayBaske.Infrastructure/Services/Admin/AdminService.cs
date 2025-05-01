@@ -63,33 +63,33 @@ public class AdminService(
         return Result.Failure(new Error(error.Code, error.Description, StatusCodes.Status400BadRequest));
     }
 
-    //public async Task<IEnumerable<UserResponse>> GetAllUsers() =>
-    //    await (from u in dbcontext.Users
-    //           join ur in dbcontext.UserRoles
-    //           on u.Id equals ur.UserId
-    //           join r in dbcontext.Roles
-    //           on ur.RoleId equals r.Id into roles
-    //           //to not include members : where r.Name != DefaultRoles.Member  ||
-    //           //where !roles.Any(c=>c.Name == DefaultRoles.Member)
-    //           select new
-    //           {
-    //               u.Id,
-    //               u.FirstName,
-    //               u.LastName,
-    //               u.Email,
-    //               u.IsDisable,
-    //               roles = roles.Select(r => r.Name!).ToList()
-    //           })
-    //              .GroupBy(x => new { x.Id, x.FirstName, x.LastName, x.Email, x.IsDisable })
-    //              .Select(c => new UserResponse(
-    //                  c.Key.Id,
-    //                  c.Key.FirstName,
-    //                  c.Key.LastName,
-    //                  c.Key.Email,
-    //                  c.Key.IsDisable,
-    //                  c.SelectMany(x => x.roles)
-    //                  ))
-    //              .ToListAsync();
+    public async Task<IEnumerable<UserResponse>> GetAllUsers() =>
+        await (from u in dbcontext.Users
+               join ur in dbcontext.UserRoles
+               on u.Id equals ur.UserId
+               join r in dbcontext.Roles
+               on ur.RoleId equals r.Id into roles
+               //to not include members : where r.Name != DefaultRoles.Member  ||
+               //where !roles.Any(c=>c.Name == DefaultRoles.Member)
+               select new
+               {
+                   u.Id,
+                   u.FirstName,
+                   u.LastName,
+                   u.Email,
+                   u.IsDisable,
+                   roles = roles.Select(r => r.Name!).ToList()
+               })
+                  .GroupBy(x => new { x.Id, x.FirstName, x.LastName, x.Email, x.IsDisable })
+                  .Select(c => new UserResponse(
+                      c.Key.Id,
+                      c.Key.FirstName,
+                      c.Key.LastName,
+                      c.Key.Email,
+                      c.Key.IsDisable,
+                      c.SelectMany(x => x.roles)
+                      ))
+                  .ToListAsync();
 
     public async Task<Result<UserResponse>> GetUserAsync(string Id)
     {
@@ -144,11 +144,11 @@ public class AdminService(
         if (result.Succeeded)
         {
 
-            //await dbcontext.UserRoles
-            //    .Where(c => c.UserId == UserId)
-            //    .ExecuteDeleteAsync();
+            await dbcontext.UserRoles
+                .Where(c => c.UserId == UserId)
+                .ExecuteDeleteAsync();
 
-            //await manager.AddToRolesAsync(user, request.Roles);
+            await manager.AddToRolesAsync(user, request.Roles);
 
             return Result.Success();
         }
