@@ -1,5 +1,5 @@
-﻿using SurvayBasket.Infrastructure.Dbcontext;
-using SurveyBasket.Contracts.Votes;
+﻿using SurvayBasket.Application.Contracts.Votes;
+using SurvayBasket.Infrastructure.Dbcontext;
 using SurveyBasket.Services.Votes;
 
 namespace SurvayBasket.Infrastructure.Services.Votes;

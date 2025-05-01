@@ -1,4 +1,5 @@
-﻿using SurveyBasket.Contracts.Users;
+﻿using SurvayBasket.Application.Contracts.Users;
+using SurveyBasket.Contracts.Users;
 
 namespace SurveyBasket.Services.Admin;
 

@@ -1,6 +1,7 @@
-﻿using SurveyBasket.Contracts.Results;
+﻿using SurvayBasket.Application.Abstraction;
+using SurveyBasket.Contracts.Results;
 
-namespace SurveyBasket.Services.AddResults;
+namespace SurvayBasket.Application.Services.AddResults;
 
 public interface IResultService
 {

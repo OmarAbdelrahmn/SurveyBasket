@@ -1,4 +1,4 @@
-﻿using SurveyBasket.Contracts.Votes;
+﻿using SurvayBasket.Application.Contracts.Votes;
 
 namespace SurveyBasket.Services.Votes;
 
