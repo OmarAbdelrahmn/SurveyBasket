@@ -1,4 +1,4 @@
-﻿namespace SurveyBasket.Contracts.Questions;
+﻿namespace SurvayBasket.Application.Contracts.Questions;
 
 public record QuestionRequest
 (

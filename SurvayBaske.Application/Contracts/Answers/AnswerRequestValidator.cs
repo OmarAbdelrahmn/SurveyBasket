@@ -1,6 +1,6 @@
-﻿
+﻿using FluentValidation;
 
-namespace SurveyBasket.Contracts.Answers;
+namespace SurvayBasket.Application.Contracts.Answers;
 
 public class AnswerRequestValidator : AbstractValidator<AnswerRequest>
 {

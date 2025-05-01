@@ -1,6 +1,6 @@
-﻿using SurveyBasket.Contracts.Answers;
+﻿using SurvayBasket.Application.Contracts.Answers;
 
-namespace SurveyBasket.Contracts.Questions;
+namespace SurvayBasket.Application.Contracts.Questions;
 
 public record QuestionResponse
 (

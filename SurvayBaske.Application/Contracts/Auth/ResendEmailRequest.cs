@@ -1,4 +1,4 @@
-﻿namespace SurveyBasket.Contracts.Auth;
+﻿namespace SurvayBasket.Application.Contracts.Auth;
 
 public record ResendEmailRequest
 (

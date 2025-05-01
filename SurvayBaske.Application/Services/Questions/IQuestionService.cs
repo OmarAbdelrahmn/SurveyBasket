@@ -1,4 +1,4 @@
-﻿using SurveyBasket.Contracts.Questions;
+﻿using SurvayBasket.Application.Contracts.Questions;
 
 namespace SurveyBasket.Services.Questions;
 

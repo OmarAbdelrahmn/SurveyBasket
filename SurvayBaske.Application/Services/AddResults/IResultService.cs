@@ -1,5 +1,5 @@
 ﻿using SurvayBasket.Application.Abstraction;
-using SurveyBasket.Contracts.Results;
+using SurvayBasket.Application.Contracts.Results;
 
 namespace SurvayBasket.Application.Services.AddResults;
 

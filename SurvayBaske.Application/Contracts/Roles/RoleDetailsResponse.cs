@@ -1,4 +1,4 @@
-﻿namespace SurveyBasket.Contracts.Roles;
+﻿namespace SurvayBasket.Application.Contracts.Roles;
 
 public record RoleDetailsResponse
 (

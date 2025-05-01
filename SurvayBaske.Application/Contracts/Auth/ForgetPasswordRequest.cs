@@ -1,4 +1,6 @@
-﻿namespace SurveyBasket.Contracts.Auth;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SurvayBasket.Application.Contracts.Auth;
 
 public record ForgetPasswordRequest
 (

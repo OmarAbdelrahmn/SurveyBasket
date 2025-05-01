@@ -1,4 +1,6 @@
-﻿namespace SurveyBasket.Contracts.Questions;
+﻿using FluentValidation;
+
+namespace SurvayBasket.Application.Contracts.Questions;
 
 public class VotesRequestValidator : AbstractValidator<QuestionRequest>
 {

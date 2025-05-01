@@ -1,4 +1,7 @@
-﻿namespace SurveyBasket.Contracts.Roles;
+﻿using FluentValidation;
+using SurveyBasket.Contracts.Roles;
+
+namespace SurvayBasket.Application.Contracts.Roles;
 
 public class RoleRequestValidator : AbstractValidator<RoleRequest>
 {

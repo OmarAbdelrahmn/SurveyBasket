@@ -1,15 +1,19 @@
 ﻿
 using Microsoft.AspNetCore.Identity;
+using SurvayBasket.Application.Abstraction;
+using SurvayBasket.Application.Abstraction.Errors;
+using SurvayBasket.Application.Contracts.Roles;
+using SurvayBasket.Domain.Consts;
 using SurvayBasket.Infrastructure.Dbcontext;
-using SurveyBasket.Abstraction.Consts;
-using SurveyBasket.Contracts.Roles;
+using SurveyBasket.Services.Roles;
+
 
 namespace SurvayBasket.Infrastructure.Services.Roles;
 
 public class RoleService(RoleManager<ApplicationRole> roleManager, AppDbcontext dbcontext) : IRoleService
 {
     private readonly RoleManager<ApplicationRole> roleManager = roleManager;
-    private readonly ApplicationDbcontext dbcontext = dbcontext;
+    private readonly AppDbcontext dbcontext = dbcontext;
 
     public async Task<Result<RoleDetailsResponse>> addroleAsync(RoleRequest request)
     {

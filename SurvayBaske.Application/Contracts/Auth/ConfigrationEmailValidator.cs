@@ -1,4 +1,6 @@
-﻿namespace SurveyBasket.Contracts.Auth;
+﻿using FluentValidation;
+
+namespace SurvayBasket.Application.Contracts.Auth;
 
 public class ConfigrationEmailValidator : AbstractValidator<ConfigrationEmailRequest>
 {

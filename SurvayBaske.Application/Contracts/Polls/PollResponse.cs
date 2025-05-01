@@ -1,4 +1,4 @@
-﻿namespace SurveyBasket.Contracts.Polls;
+﻿namespace SurvayBasket.Application.Contracts.Polls;
 
 public record PollResponse
 (

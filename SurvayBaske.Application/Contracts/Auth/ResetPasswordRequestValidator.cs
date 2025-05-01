@@ -1,6 +1,7 @@
-﻿using SurveyBasket.Abstraction.Consts;
+﻿using FluentValidation;
+using SurvayBasket.Domain.Consts;
 
-namespace SurveyBasket.Contracts.Auth;
+namespace SurvayBasket.Application.Contracts.Auth;
 
 public class ResetPasswordRequestValidator : AbstractValidator<ResetPasswordRequest>
 {

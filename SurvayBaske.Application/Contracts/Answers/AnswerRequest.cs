@@ -1,4 +1,4 @@
-﻿namespace SurveyBasket.Contracts.Answers;
+﻿namespace SurvayBasket.Application.Contracts.Answers;
 
 public record AnswerRequest
 (int Id,

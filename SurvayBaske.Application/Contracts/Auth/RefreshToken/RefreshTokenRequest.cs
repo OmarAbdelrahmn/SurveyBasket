@@ -1,4 +1,4 @@
-﻿namespace SurveyBasket.Contracts.Auth.RefreshToken;
+﻿namespace SurvayBasket.Application.Contracts.Auth.RefreshToken;
 
 public record RefreshTokenRequest
 (

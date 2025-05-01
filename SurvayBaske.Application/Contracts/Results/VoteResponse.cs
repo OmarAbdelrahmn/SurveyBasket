@@ -1,4 +1,6 @@
-﻿namespace SurveyBasket.Contracts.Results;
+﻿using SurveyBasket.Contracts.Results;
+
+namespace SurvayBasket.Application.Contracts.Results;
 
 public record VoteResponse
 (
