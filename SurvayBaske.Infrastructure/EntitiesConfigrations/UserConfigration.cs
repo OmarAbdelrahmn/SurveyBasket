@@ -1,4 +1,7 @@
 ﻿
+using Microsoft.AspNetCore.Identity;
+using SurvayBasket.Domain.Consts;
+
 namespace SurvayBasket.Infrastructure.EntitiesConfigrations;
 
 public class UserConfigration : IEntityTypeConfiguration<ApplicataionUser>

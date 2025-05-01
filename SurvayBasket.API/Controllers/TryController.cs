@@ -9,7 +9,7 @@ public class TryController(IConfiguration configuration) : ControllerBase
     private readonly IConfiguration configuration = configuration;
 
     [HttpGet("")]
-    public async Task<IActionResult> TryAsync()
+    public IActionResult TryAsync()
     {
         var connection = configuration.GetConnectionString("DefaultConnection");
 
