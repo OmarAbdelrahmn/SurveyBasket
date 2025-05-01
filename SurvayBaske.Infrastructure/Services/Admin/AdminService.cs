@@ -1,7 +1,7 @@
 ﻿using SurveyBasket.Contracts.Users;
 using SurveyBasket.Services.Roles;
 
-namespace SurveyBasket.Services.Admin;
+namespace SurvayBasket.Infrastructure.Services.Admin;
 
 public class AdminService(
      UserManager<ApplicataionUser> manager

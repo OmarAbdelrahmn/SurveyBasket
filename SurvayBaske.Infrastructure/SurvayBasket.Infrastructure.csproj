@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SurvayBaske.Application\SurvayBasket.Application.csproj" />
     <ProjectReference Include="..\SurvayBaske.Domain\SurvayBasket.Domain.csproj" />
   </ItemGroup>
 

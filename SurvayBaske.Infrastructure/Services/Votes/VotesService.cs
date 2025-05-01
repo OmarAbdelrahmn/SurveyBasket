@@ -1,8 +1,10 @@
-﻿using SurveyBasket.Contracts.Votes;
+﻿using SurvayBasket.Infrastructure.Dbcontext;
+using SurveyBasket.Contracts.Votes;
+using SurveyBasket.Services.Votes;
 
-namespace SurveyBasket.Services.Votes;
+namespace SurvayBasket.Infrastructure.Services.Votes;
 
-public class VotesService(ApplicationDbcontext dbcontext) : IVotesService
+public class VotesService(AppDbcontext dbcontext) : IVotesService
 {
     public async Task<Result> AddVote(int PollId, string UserId, VotesRequest request)
     {

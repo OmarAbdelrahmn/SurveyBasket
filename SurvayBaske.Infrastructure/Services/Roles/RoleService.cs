@@ -1,10 +1,12 @@
 ﻿
+using Microsoft.AspNetCore.Identity;
+using SurvayBasket.Infrastructure.Dbcontext;
 using SurveyBasket.Abstraction.Consts;
 using SurveyBasket.Contracts.Roles;
 
-namespace SurveyBasket.Services.Roles;
+namespace SurvayBasket.Infrastructure.Services.Roles;
 
-public class RoleService(RoleManager<ApplicationRole> roleManager, ApplicationDbcontext dbcontext) : IRoleService
+public class RoleService(RoleManager<ApplicationRole> roleManager, AppDbcontext dbcontext) : IRoleService
 {
     private readonly RoleManager<ApplicationRole> roleManager = roleManager;
     private readonly ApplicationDbcontext dbcontext = dbcontext;

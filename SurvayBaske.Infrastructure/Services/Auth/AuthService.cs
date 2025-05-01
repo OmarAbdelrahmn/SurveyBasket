@@ -1,8 +1,6 @@
-﻿
+﻿using SurveyBasket.Abstraction.Consts;
 
-using SurveyBasket.Abstraction.Consts;
-
-namespace SurveyBasket.Services.Auth;
+namespace SurvayBasket.Infrastructure.Services.Auth;
 
 public class AuthService(
     UserManager<ApplicataionUser> manager,

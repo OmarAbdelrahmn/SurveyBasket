@@ -1,9 +1,10 @@
-﻿using SurveyBasket.Contracts.Answers;
+﻿using SurvayBasket.Infrastructure.Dbcontext;
+using SurveyBasket.Contracts.Answers;
 using SurveyBasket.Contracts.Questions;
 
-namespace SurveyBasket.Services.Questions;
+namespace SurvayBasket.Infrastructure.Services.Questions;
 
-public class QuestionService(ApplicationDbcontext dbcontext) : IQuestionService
+public class QuestionService(AppDbcontext dbcontext) : IQuestionService
 {
     private readonly ApplicationDbcontext dbcontext = dbcontext;
 

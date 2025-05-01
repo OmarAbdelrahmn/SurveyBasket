@@ -1,4 +1,4 @@
-﻿namespace SurveyBasket.Services.Notification;
+﻿namespace SurvayBasket.Infrastructure.Services.Notification;
 
 public class NotificationService(
     ApplicationDbcontext dbcontext,

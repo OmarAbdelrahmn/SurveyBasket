@@ -1,9 +1,10 @@
-﻿using SurveyBasket.Services.Notification;
+﻿using SurvayBasket.Infrastructure.Dbcontext;
+using SurveyBasket.Services.Notification;
 
-namespace SurveyBasket.Services.Polls;
+namespace SurvayBasket.Infrastructure.Services.Polls;
 
 public class PollsService(
-    ApplicationDbcontext dbcontext,
+    AppDbcontext dbcontext,
     INotificationService notification
     ) : IPollsService
 {

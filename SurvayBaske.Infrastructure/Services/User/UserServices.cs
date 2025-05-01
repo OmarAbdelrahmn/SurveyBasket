@@ -1,6 +1,7 @@
-﻿using SurveyBasket.Contracts.Users;
+﻿using Microsoft.AspNetCore.Identity;
+using SurveyBasket.Contracts.Users;
 
-namespace SurveyBasket.Services.User;
+namespace SurvayBasket.Infrastructure.Services.User;
 
 public class UserServices(UserManager<ApplicataionUser> manager) : IUserService
 {

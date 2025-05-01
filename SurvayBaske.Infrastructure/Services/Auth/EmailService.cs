@@ -3,7 +3,7 @@ using MailKit.Security;
 using MimeKit;
 using SurveyBasket.Settings;
 
-namespace SurveyBasket.Services.Auth;
+namespace SurvayBasket.Infrastructure.Services.Auth;
 
 public class EmailService(IOptions<MailSettings> options) : IEmailSender
 {
