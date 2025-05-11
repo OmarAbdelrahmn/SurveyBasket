@@ -1,7 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using SurvayBasket.Application.Abstraction;
+﻿using SurvayBasket.Application.Abstraction;
 using SurvayBasket.Application.Abstraction.Errors;
 using SurvayBasket.Application.Contracts.Roles;
 using SurvayBasket.Application.Services.Roles;
@@ -122,31 +119,31 @@ public class RoleService(RoleManager<ApplicationRole> roleManager, AppDbcontext 
         //        .Select(c => c.ClaimValue)
         //        .ToListAsync();
 
-            //var newPermissions = request.Permissions
-            //    .Except(Currentpermissions)
-            //    .Select(x => new IdentityRoleClaim<string>
-            //    {
-            //        ClaimType = Permissions.Type,
-            //        ClaimValue = x,
-            //        RoleId = role.Id
-            //    });
+        //var newPermissions = request.Permissions
+        //    .Except(Currentpermissions)
+        //    .Select(x => new IdentityRoleClaim<string>
+        //    {
+        //        ClaimType = Permissions.Type,
+        //        ClaimValue = x,
+        //        RoleId = role.Id
+        //    });
 
-            //var removedPermissions = Currentpermissions.Except(request.Permissions);
+        //var removedPermissions = Currentpermissions.Except(request.Permissions);
 
-            //await dbcontext.RoleClaims
-            //    .Where(c => c.RoleId == Id && removedPermissions.Contains(c.ClaimValue))
-            //    .ExecuteDeleteAsync();
+        //await dbcontext.RoleClaims
+        //    .Where(c => c.RoleId == Id && removedPermissions.Contains(c.ClaimValue))
+        //    .ExecuteDeleteAsync();
 
-            //await dbcontext.AddRangeAsync(newPermissions);
-            //await dbcontext.SaveChangesAsync();
+        //await dbcontext.AddRangeAsync(newPermissions);
+        //await dbcontext.SaveChangesAsync();
 
-            return Result.Success();
-
-        }
-
-        //var error = result.Errors.First();
-        //return Result.Failure(new Error(error.Code, error.Description, StatusCodes.Status400BadRequest));
-
+        return Result.Success();
 
     }
+
+    //var error = result.Errors.First();
+    //return Result.Failure(new Error(error.Code, error.Description, StatusCodes.Status400BadRequest));
+
+
+}
 //}

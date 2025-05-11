@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-
-namespace SurvayBasket.Infrastructure.Authentication.Filters;
+﻿namespace SurvayBasket.Infrastructure.Authentication.Filters;
 
 public class PermissionRequirement(string permission) : IAuthorizationRequirement
 {

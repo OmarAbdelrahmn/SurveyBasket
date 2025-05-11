@@ -1,7 +1,4 @@
-﻿using Hangfire;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using SurvayBasket.Application.Abstraction;
 using SurvayBasket.Application.Abstraction.Errors;
 using SurvayBasket.Application.Contracts.Auth;
@@ -10,8 +7,6 @@ using SurvayBasket.Domain.Consts;
 using SurvayBasket.Infrastructure.Authentication;
 using SurvayBasket.Infrastructure.Dbcontext;
 using SurvayBasket.Infrastructure.Helpers;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace SurvayBasket.Infrastructure.Services.Auth;
 

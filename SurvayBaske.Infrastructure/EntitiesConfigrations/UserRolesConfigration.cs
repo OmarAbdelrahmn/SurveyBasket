@@ -1,6 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Identity;
-using SurvayBasket.Domain.Consts;
+﻿using SurvayBasket.Domain.Consts;
 
 namespace SurvayBasket.Infrastructure.EntitiesConfigrations;
 

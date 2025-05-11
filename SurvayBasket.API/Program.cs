@@ -1,9 +1,5 @@
-using SurvayBasket.Infrastructure;
-using Microsoft.Extensions.Configuration; // Needed for builder.Configuration
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using SurvayBasket.API.Exceptions;
+using SurvayBasket.Infrastructure;
 
 
 var builder = WebApplication.CreateBuilder(args);

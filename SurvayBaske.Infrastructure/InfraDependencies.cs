@@ -1,40 +1,36 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
-using SurvayBasket.Infrastructure.Dbcontext;
-using Hangfire;
-using SurvayBasket.Infrastructure.Authentication.Filters;
-using SurvayBasket.Infrastructure.Authentication;
-using SurvayBasket.Infrastructure.Settings;
-using SurvayBasket.Application.Services.Polls;
-using SurvayBasket.Application.Services.Admin;
-using SurvayBasket.Infrastructure.Services.Polls;
-using SurvayBasket.Infrastructure.Services.Admin;
-using SurvayBasket.Infrastructure.Services.Roles;
-using SurvayBasket.Application.Services.User;
-using SurvayBasket.Application.Services.Roles;
-using SurvayBasket.Application.Services.Notification;
 using SurvayBasket.Application.Services.AddResults;
-using SurvayBasket.Application.Services.Votes;
-using SurvayBasket.Application.Services.Questions;
+using SurvayBasket.Application.Services.Admin;
 using SurvayBasket.Application.Services.Auth;
-using SurvayBasket.Infrastructure.Services.Auth;
-using SurvayBasket.Infrastructure.Services.Questions;
-using SurvayBasket.Infrastructure.Services.Votes;
+using SurvayBasket.Application.Services.Notification;
+using SurvayBasket.Application.Services.Polls;
+using SurvayBasket.Application.Services.Questions;
+using SurvayBasket.Application.Services.Roles;
+using SurvayBasket.Application.Services.User;
+using SurvayBasket.Application.Services.Votes;
+using SurvayBasket.Infrastructure.Authentication;
+using SurvayBasket.Infrastructure.Authentication.Filters;
+using SurvayBasket.Infrastructure.Dbcontext;
 using SurvayBasket.Infrastructure.Services.AddResults;
+using SurvayBasket.Infrastructure.Services.Admin;
+using SurvayBasket.Infrastructure.Services.Auth;
 using SurvayBasket.Infrastructure.Services.Notification;
+using SurvayBasket.Infrastructure.Services.Polls;
+using SurvayBasket.Infrastructure.Services.Questions;
+using SurvayBasket.Infrastructure.Services.Roles;
 using SurvayBasket.Infrastructure.Services.User;
-using SurvayBasket.Application.Abstraction.Errors;
+using SurvayBasket.Infrastructure.Services.Votes;
+using SurvayBasket.Infrastructure.Settings;
 //using Microsoft.OpenApi.Models;
 
-using Microsoft.AspNetCore.Diagnostics;
 
 namespace SurvayBasket.Infrastructure;
 public static class InfraDependencies
 {
     // This class is used to group all the dependencies related to the infrastructure layer.
 
-    public static IServiceCollection AddInfrastructure(this IServiceCollection Services , IConfiguration configuration)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection Services, IConfiguration configuration)
     {
         Services.AddControllers();
 
@@ -52,7 +48,7 @@ public static class InfraDependencies
         Services.AddScoped<IAuthService, AuthService>();
         Services.AddScoped<IJwtProvider, JwtProvider>();
 
-        
+
         Services.AddProblemDetails();
 
 

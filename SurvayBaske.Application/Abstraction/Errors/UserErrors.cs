@@ -1,6 +1,4 @@
-﻿using SurvayBasket.Application.Abstraction;
-
-namespace SurvayBasket.Application.Abstraction.Errors;
+﻿namespace SurvayBasket.Application.Abstraction.Errors;
 
 public static class UserErrors
 {

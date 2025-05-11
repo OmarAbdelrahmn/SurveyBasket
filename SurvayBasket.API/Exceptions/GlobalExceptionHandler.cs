@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SurvayBasket.API.Exceptions;

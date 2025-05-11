@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using SurvayBasket.Domain.Consts;
+﻿using SurvayBasket.Domain.Consts;
 
 namespace SurvayBasket.Infrastructure.Authentication.Filters;
 

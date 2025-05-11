@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace SurvayBasket.Infrastructure.Authentication;
+﻿namespace SurvayBasket.Infrastructure.Authentication;
 
 public class JwtOptions
 {
